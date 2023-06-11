@@ -1,0 +1,2552 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+	<meta charset="UTF-8" />
+	<script>if (navigator.userAgent.match(/MSIE|Internet Explorer/i) || navigator.userAgent.match(/Trident\/7\..*?rv:11/i)) { var href = document.location.href; if (!href.match(/[?&]nowprocket/)) { if (href.indexOf("?") == -1) { if (href.indexOf("#") == -1) { document.location.href = href + "?nowprocket=1" } else { document.location.href = href.replace("#", "?nowprocket=1#") } } else { if (href.indexOf("#") == -1) { document.location.href = href + "&nowprocket=1" } else { document.location.href = href.replace("#", "&nowprocket=1#") } } } }</script>
+	<script>class RocketLazyLoadScripts { constructor(e) { this.triggerEvents = e, this.eventOptions = { passive: !0 }, this.userEventListener = this.triggerListener.bind(this), this.delayedScripts = { normal: [], async: [], defer: [] }, this.allJQueries = [] } _addUserInteractionListener(e) { this.triggerEvents.forEach((t => window.addEventListener(t, e.userEventListener, e.eventOptions))) } _removeUserInteractionListener(e) { this.triggerEvents.forEach((t => window.removeEventListener(t, e.userEventListener, e.eventOptions))) } triggerListener() { this._removeUserInteractionListener(this), "loading" === document.readyState ? document.addEventListener("DOMContentLoaded", this._loadEverythingNow.bind(this)) : this._loadEverythingNow() } async _loadEverythingNow() { this._delayEventListeners(), this._delayJQueryReady(this), this._handleDocumentWrite(), this._registerAllDelayedScripts(), this._preloadAllScripts(), await this._loadScriptsFromList(this.delayedScripts.normal), await this._loadScriptsFromList(this.delayedScripts.defer), await this._loadScriptsFromList(this.delayedScripts.async), await this._triggerDOMContentLoaded(), await this._triggerWindowLoad(), window.dispatchEvent(new Event("rocket-allScriptsLoaded")) } _registerAllDelayedScripts() { document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e => { e.hasAttribute("src") ? e.hasAttribute("async") && !1 !== e.async ? this.delayedScripts.async.push(e) : e.hasAttribute("defer") && !1 !== e.defer || "module" === e.getAttribute("data-rocket-type") ? this.delayedScripts.defer.push(e) : this.delayedScripts.normal.push(e) : this.delayedScripts.normal.push(e) })) } async _transformScript(e) { return await this._requestAnimFrame(), new Promise((t => { const n = document.createElement("script"); let r;[...e.attributes].forEach((e => { let t = e.nodeName; "type" !== t && ("data-rocket-type" === t && (t = "type", r = e.nodeValue), n.setAttribute(t, e.nodeValue)) })), e.hasAttribute("src") ? (n.addEventListener("load", t), n.addEventListener("error", t)) : (n.text = e.text, t()), e.parentNode.replaceChild(n, e) })) } async _loadScriptsFromList(e) { const t = e.shift(); return t ? (await this._transformScript(t), this._loadScriptsFromList(e)) : Promise.resolve() } _preloadAllScripts() { var e = document.createDocumentFragment();[...this.delayedScripts.normal, ...this.delayedScripts.defer, ...this.delayedScripts.async].forEach((t => { const n = t.getAttribute("src"); if (n) { const t = document.createElement("link"); t.href = n, t.rel = "preload", t.as = "script", e.appendChild(t) } })), document.head.appendChild(e) } _delayEventListeners() { let e = {}; function t(t, n) { !function (t) { function n(n) { return e[t].eventsToRewrite.indexOf(n) >= 0 ? "rocket-" + n : n } e[t] || (e[t] = { originalFunctions: { add: t.addEventListener, remove: t.removeEventListener }, eventsToRewrite: [] }, t.addEventListener = function () { arguments[0] = n(arguments[0]), e[t].originalFunctions.add.apply(t, arguments) }, t.removeEventListener = function () { arguments[0] = n(arguments[0]), e[t].originalFunctions.remove.apply(t, arguments) }) }(t), e[t].eventsToRewrite.push(n) } function n(e, t) { let n = e[t]; Object.defineProperty(e, t, { get: () => n || function () { }, set(r) { e["rocket" + t] = n = r } }) } t(document, "DOMContentLoaded"), t(window, "DOMContentLoaded"), t(window, "load"), t(window, "pageshow"), t(document, "readystatechange"), n(document, "onreadystatechange"), n(window, "onload"), n(window, "onpageshow") } _delayJQueryReady(e) { let t = window.jQuery; Object.defineProperty(window, "jQuery", { get: () => t, set(n) { if (n && n.fn && !e.allJQueries.includes(n)) { n.fn.ready = n.fn.init.prototype.ready = function (t) { e.domReadyFired ? t.bind(document)(n) : document.addEventListener("rocket-DOMContentLoaded", (() => t.bind(document)(n))) }; const t = n.fn.on; n.fn.on = n.fn.init.prototype.on = function () { if (this[0] === window) { function e(e) { return e.split(" ").map((e => "load" === e || 0 === e.indexOf("load.") ? "rocket-jquery-load" : e)).join(" ") } "string" == typeof arguments[0] || arguments[0] instanceof String ? arguments[0] = e(arguments[0]) : "object" == typeof arguments[0] && Object.keys(arguments[0]).forEach((t => { delete Object.assign(arguments[0], { [e(t)]: arguments[0][t] })[t] })) } return t.apply(this, arguments), this }, e.allJQueries.push(n) } t = n } }) } async _triggerDOMContentLoaded() { this.domReadyFired = !0, await this._requestAnimFrame(), document.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._requestAnimFrame(), window.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._requestAnimFrame(), document.dispatchEvent(new Event("rocket-readystatechange")), await this._requestAnimFrame(), document.rocketonreadystatechange && document.rocketonreadystatechange() } async _triggerWindowLoad() { await this._requestAnimFrame(), window.dispatchEvent(new Event("rocket-load")), await this._requestAnimFrame(), window.rocketonload && window.rocketonload(), await this._requestAnimFrame(), this.allJQueries.forEach((e => e(window).trigger("rocket-jquery-load"))), window.dispatchEvent(new Event("rocket-pageshow")), await this._requestAnimFrame(), window.rocketonpageshow && window.rocketonpageshow() } _handleDocumentWrite() { const e = new Map; document.write = document.writeln = function (t) { const n = document.currentScript, r = document.createRange(), i = n.parentElement; let o = e.get(n); void 0 === o && (o = n.nextSibling, e.set(n, o)); const a = document.createDocumentFragment(); r.setStart(a, 0), a.appendChild(r.createContextualFragment(t)), i.insertBefore(a, o) } } async _requestAnimFrame() { return new Promise((e => requestAnimationFrame(e))) } static run() { const e = new RocketLazyLoadScripts(["keydown", "mousemove", "touchmove", "touchstart", "touchend", "wheel"]); e._addUserInteractionListener(e) } } RocketLazyLoadScripts.run();</script>
+
+	<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=AW-10827443084"></script>
+	<script type="rocketlazyloadscript">
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+	gtag('config', 'AW-10827443084');
+	</script>
+
+
+
+	<script type="rocketlazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-W3NBQ7R');</script>
+
+	<meta name="viewport" content="width=device-width" />
+	<meta name="facebook-domain-verification" content="d8wphnygo10effgxeg8auc3bt861t6" />
+	<link data-minify="1" rel="stylesheet"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/ajax/libs/animate.css/4.1.1/animate.min.css?ver=1681814883" />
+	<meta name="Keywords"
+		content="best seo company, seo company in india, seo experts in India, seo experts, seo services,internet marketing,seo company,online marketing,seo agency,digital marketing company,seo consultant,seo packages,top seo companies,small business seo best seo service,top website marketing companies,top seo professionals,seo for service based business,small business seo services,local seo for small business,seo lead generation services,quality seo leads,seo lead generation,seo leads,digital marketing agency, digital marketing solutions,best digital marketing agency,best digital marketing services,digital marketing services,digital marketing company,best digital marketing company.">
+	<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+	<title>Search Engine Optimisation Services</title>
+	<link rel="preload" as="style"
+		href="https://fonts.googleapis.com/css2?family=Montserrat%3Awght%40300%3B400%3B500%3B600%3B700%3B800&#038;ver=6.2&#038;display=swap" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Montserrat%3Awght%40300%3B400%3B500%3B600%3B700%3B800&#038;ver=6.2&#038;display=swap"
+		media="print" onload="this.media='all'" /><noscript>
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Montserrat%3Awght%40300%3B400%3B500%3B600%3B700%3B800&#038;ver=6.2&#038;display=swap" />
+	</noscript>
+	<meta name="description"
+		content="Best Digital Marketing Services by Technocrats Horizons. We are one of the best digital marketing agencies offering top notch digital marketing services worldwide. Reach out to us take your business to the next level with our digital marketing solutions." />
+	<link rel="canonical" href="https://technocratshorizons.com/digital-marketing-agency/" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title"
+		content="Digital Marketing Agency For Best Digital Marketing Services | Technocrats Horizons" />
+	<meta property="og:description"
+		content="Best Digital Marketing Services by Technocrats Horizons. We are one of the best digital marketing agencies offering top notch digital marketing services worldwide. Reach out to us take your business to the next level with our digital marketing solutions." />
+	<meta property="og:url" content="https://technocratshorizons.com/digital-marketing-agency/" />
+	<meta property="og:site_name" content="Technocrats Horizons" />
+	<meta property="article:modified_time" content="2023-04-13T06:16:02+00:00" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<script type="application/ld+json"
+		class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","@id":"https://technocratshorizons.com/digital-marketing-agency/","url":"https://technocratshorizons.com/digital-marketing-agency/","name":"Digital Marketing Agency For Best Digital Marketing Services | Technocrats Horizons","isPartOf":{"@id":"https://technocratshorizons.com/#website"},"datePublished":"2021-01-12T11:46:14+00:00","dateModified":"2023-04-13T06:16:02+00:00","description":"Best Digital Marketing Services by Technocrats Horizons. We are one of the best digital marketing agencies offering top notch digital marketing services worldwide. Reach out to us take your business to the next level with our digital marketing solutions.","breadcrumb":{"@id":"https://technocratshorizons.com/digital-marketing-agency/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://technocratshorizons.com/digital-marketing-agency/"]}]},{"@type":"BreadcrumbList","@id":"https://technocratshorizons.com/digital-marketing-agency/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://technocratshorizons.com/"},{"@type":"ListItem","position":2,"name":"DIGITAL MARKETING SOLUTIONS"}]},{"@type":"WebSite","@id":"https://technocratshorizons.com/#website","url":"https://technocratshorizons.com/","name":"Technocrats Horizons","description":"","publisher":{"@id":"https://technocratshorizons.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://technocratshorizons.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://technocratshorizons.com/#organization","name":"Technocrats Horizons","url":"https://technocratshorizons.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://technocratshorizons.com/#/schema/logo/image/","url":"https://technocratshorizons.com/wp-content/uploads/2020/06/techno-logo.png","contentUrl":"https://technocratshorizons.com/wp-content/uploads/2020/06/techno-logo.png","width":385,"height":48,"caption":"Technocrats Horizons"},"image":{"@id":"https://technocratshorizons.com/#/schema/logo/image/"}}]}</script>
+
+	<link rel="dns-prefetch" href="//static.addtoany.com" />
+	<link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+	<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+	<link rel="dns-prefetch" href="//fonts.googleapis.com" />
+	<link rel="dns-prefetch" href="//technocratshorizons.com" />
+	<link rel="dns-prefetch" href="//https" />
+	<link href="https://fonts.gstatic.com" crossorigin rel="preconnect" />
+	<link rel="alternate" type="application/rss+xml" title="Technocrats Horizons &raquo; Feed"
+		href="https://technocratshorizons.com/feed/" />
+	<link rel="alternate" type="application/rss+xml" title="Technocrats Horizons &raquo; Comments Feed"
+		href="https://technocratshorizons.com/comments/feed/" />
+	<style type="text/css">
+		img.wp-smiley,
+		img.emoji {
+			display: inline !important;
+			border: none !important;
+			box-shadow: none !important;
+			height: 1em !important;
+			width: 1em !important;
+			margin: 0 0.07em !important;
+			vertical-align: -0.1em !important;
+			background: none !important;
+			padding: 0 !important;
+		}
+	</style>
+	<link data-minify="1" rel="stylesheet" id="contact-form-7-css"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/plugins/contact-form-7/includes/css/styles.css?ver=1681814883"
+		type="text/css" media="all" />
+	<link rel="stylesheet" id="nbcpf-intlTelInput-style-css"
+		href="https://technocratshorizons.com/wp-content/plugins/country-phone-field-contact-form-7/assets/css/intlTelInput.min.css?ver=6.2"
+		type="text/css" media="all" />
+	<link rel="stylesheet" id="nbcpf-countryFlag-style-css"
+		href="https://technocratshorizons.com/wp-content/plugins/country-phone-field-contact-form-7/assets/css/countrySelect.min.css?ver=6.2"
+		type="text/css" media="all" />
+	<link rel="stylesheet" id="wpcf7-redirect-script-frontend-css"
+		href="https://technocratshorizons.com/wp-content/plugins/wpcf7-redirect/build/css/wpcf7-redirect-frontend.min.css?ver=6.2"
+		type="text/css" media="all" />
+	<link data-minify="1" rel="stylesheet" id="wp-pagenavi-css"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/plugins/wp-pagenavi/pagenavi-css.css?ver=1681814883"
+		type="text/css" media="all" />
+	<link rel="stylesheet" id="ez-toc-css"
+		href="https://technocratshorizons.com/wp-content/plugins/easy-table-of-contents/assets/css/screen.min.css?ver=2.0.47.1"
+		type="text/css" media="all" />
+	<style id="ez-toc-inline-css" type="text/css">
+		div#ez-toc-container p.ez-toc-title {
+			font-size: 120%;
+		}
+
+		div#ez-toc-container p.ez-toc-title {
+			font-weight: 500;
+		}
+
+		div#ez-toc-container ul li {
+			font-size: 95%;
+		}
+
+		div#ez-toc-container nav ul ul li ul li {
+			font-size: 90% !important;
+		}
+
+		.ez-toc-container-direction {
+			direction: ltr;
+		}
+
+		.ez-toc-counter ul {
+			counter-reset: item;
+		}
+
+		.ez-toc-counter nav ul li a::before {
+			content: counters(item, ".", decimal) ". ";
+			display: inline-block;
+			counter-increment: item;
+			flex-grow: 0;
+			flex-shrink: 0;
+			margin-right: .2em;
+			float: left;
+		}
+
+		.ez-toc-widget-direction {
+			direction: ltr;
+		}
+
+		.ez-toc-widget-container ul {
+			counter-reset: item;
+		}
+
+		.ez-toc-widget-container nav ul li a::before {
+			content: counters(item, ".", decimal) ". ";
+			display: inline-block;
+			counter-increment: item;
+			flex-grow: 0;
+			flex-shrink: 0;
+			margin-right: .2em;
+			float: left;
+		}
+	</style>
+	<link data-minify="1" rel="stylesheet" id="fontawesome-css-css"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/themes/technocrats/assets/css/all.css?ver=1681814883"
+		type="text/css" media="all" />
+	<link rel="stylesheet" id="bootstrap-css-css"
+		href="https://technocratshorizons.com/wp-content/themes/technocrats/assets/bootstrap/css/bootstrap.min.css?ver=6.2"
+		type="text/css" media="all" />
+	<link data-minify="1" rel="stylesheet" id="main-style-font-css"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/themes/technocrats/assets/fonts/fonts.css?ver=1681814883"
+		type="text/css" media="all" />
+	<link rel="stylesheet" id="carousel-css-css"
+		href="https://technocratshorizons.com/wp-content/themes/technocrats/assets/owl-carousel/css/owl.carousel.min.css?ver=6.2"
+		type="text/css" media="all" />
+	<link data-minify="1" rel="stylesheet" id="swiper-css-css"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/ajax/libs/Swiper/6.5.7/swiper-bundle.min.css?ver=1681814884"
+		type="text/css" media="all" />
+	<link data-minify="1" rel="stylesheet" id="technocrats-style-css"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/themes/technocrats/style.css?ver=1681814884"
+		type="text/css" media="all" />
+	<link data-minify="1" rel="stylesheet" id="custom-css-css"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/themes/technocrats/assets/css/custom.css?ver=1681814884"
+		type="text/css" media="all" />
+	<link data-minify="1" rel="stylesheet" id="responsive-css-css"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/themes/technocrats/assets/css/responsive.css?ver=1681814884"
+		type="text/css" media="all" />
+	<link data-minify="1" rel="stylesheet" id="jquery-timepicker-css-css"
+		href="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/themes/technocrats/assets/css/jquery-timepicker.css?ver=1681814884"
+		type="text/css" media="all" />
+	<link rel="stylesheet" id="jquery-ui-css-css"
+		href="https://technocratshorizons.com/wp-content/themes/technocrats/assets/css/jquery-ui.min.css?ver=6.2"
+		type="text/css" media="all" />
+	<link rel="stylesheet" id="addtoany-css"
+		href="https://technocratshorizons.com/wp-content/plugins/add-to-any/addtoany.min.css?ver=1.16" type="text/css"
+		media="all" />
+	<script type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/plugins/jquery-manager/assets/js/jquery-3.5.1.min.js"
+		id="jquery-core-js" defer></script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/plugins/jquery-manager/assets/js/jquery-migrate-3.3.0.min.js"
+		id="jquery-migrate-js" defer></script>
+	<script type="text/javascript" id="addtoany-core-js-before">
+		window.a2a_config = window.a2a_config || {}; a2a_config.callbacks = []; a2a_config.overlays = []; a2a_config.templates = {};
+		a2a_config.icon_color = "transparent,#4c4c4c";
+	</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript" async
+		src="https://static.addtoany.com/menu/page.js" id="addtoany-core-js"></script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript" async
+		src="https://technocratshorizons.com/wp-content/plugins/add-to-any/addtoany.min.js?ver=1.1"
+		id="addtoany-jquery-js"></script>
+	<script type="text/javascript" id="ez-toc-scroll-scriptjs-js-after">window.addEventListener('DOMContentLoaded', function () {
+			jQuery(document).ready(function () { document.querySelectorAll(".ez-toc-section").forEach(t => { t.setAttribute("ez-toc-data-id", "#" + decodeURI(t.getAttribute("id"))) }), jQuery("a.ez-toc-link").click(function () { let t = jQuery(this).attr("href"), e = jQuery("#wpadminbar"), i = 0; 120 > 30 && (i = 120), e.length && (i += e.height()), jQuery('[ez-toc-data-id="' + decodeURI(t) + '"]').length > 0 && (i = jQuery('[ez-toc-data-id="' + decodeURI(t) + '"]').offset().top - i), jQuery("html, body").animate({ scrollTop: i }, 500) }) });
+		});</script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/themes/technocrats/assets/owl-carousel/js/owl.carousel.js?ver=1681814884"
+		id="carousel-js-js" defer></script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/themes/technocrats/assets/bootstrap/js/bootstrap.min.js?ver=6.2"
+		id="bootstrap-js-js" defer></script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/ajax/libs/Swiper/6.5.7/swiper-bundle.min.js?ver=1681814884"
+		id="swiper-js-js" defer></script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/ajax/libs/waypoints/2.0.3/waypoints.min.js?ver=1681814884"
+		id="jquery-waypoint-js-js" defer></script>
+	<script data-minify="1" type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/jquery.counterup/1.0/jquery.counterup.min.js?ver=1681814884"
+		id="jquery-counter-js-js" defer></script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/ajax/libs/moment.js/2.18.1/moment.min.js?ver=1681814884"
+		id="jquery-moment-js-js" defer></script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?ver=1681814884"
+		id="jquery-moment-locale-js-js" defer></script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/ajax/libs/popper.js/1.12.9/umd/popper.min.js?ver=1681814884"
+		id="Poper-js-js" defer></script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/themes/technocrats/assets/js/jquery-ui.min.js?ver=6.2"
+		id="jquery-ui-datepicker-js-js" defer></script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/themes/technocrats/assets/js/jquery-timepicker.js?ver=1681814884"
+		id="jquery-timepicker-js-js" defer></script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/themes/technocrats/assets/js/custom.js?ver=6.2"
+		id="jquery-custom-js-js" defer></script>
+	<script type="text/javascript" id="my_loadmore-js-extra">
+		/* <![CDATA[ */
+		var loadmore_params = { "ajaxurl": "https:\/\/technocratshorizons.com\/wp-admin\/admin-ajax.php", "posts": "{\"page\":0,\"pagename\":\"digital-marketing-agency\",\"error\":\"\",\"m\":\"\",\"p\":0,\"post_parent\":\"\",\"subpost\":\"\",\"subpost_id\":\"\",\"attachment\":\"\",\"attachment_id\":0,\"name\":\"digital-marketing-agency\",\"page_id\":0,\"second\":\"\",\"minute\":\"\",\"hour\":\"\",\"day\":0,\"monthnum\":0,\"year\":0,\"w\":0,\"category_name\":\"\",\"tag\":\"\",\"cat\":\"\",\"tag_id\":\"\",\"author\":\"\",\"author_name\":\"\",\"feed\":\"\",\"tb\":\"\",\"paged\":0,\"meta_key\":\"\",\"meta_value\":\"\",\"preview\":\"\",\"s\":\"\",\"sentence\":\"\",\"title\":\"\",\"fields\":\"\",\"menu_order\":\"\",\"embed\":\"\",\"category__in\":[],\"category__not_in\":[],\"category__and\":[],\"post__in\":[],\"post__not_in\":[],\"post_name__in\":[],\"tag__in\":[],\"tag__not_in\":[],\"tag__and\":[],\"tag_slug__in\":[],\"tag_slug__and\":[],\"post_parent__in\":[],\"post_parent__not_in\":[],\"author__in\":[],\"author__not_in\":[],\"search_columns\":[],\"ignore_sticky_posts\":false,\"suppress_filters\":false,\"cache_results\":true,\"update_post_term_cache\":true,\"update_menu_item_cache\":false,\"lazy_load_term_meta\":true,\"update_post_meta_cache\":true,\"post_type\":\"\",\"posts_per_page\":10,\"nopaging\":false,\"comments_per_page\":\"50\",\"no_found_rows\":false,\"order\":\"DESC\"}", "current_page": "1", "max_page": "0" };
+/* ]]> */
+	</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/themes/technocrats/assets/js/custom.js?ver=6.2"
+		id="my_loadmore-js" defer></script>
+	<link rel="https://api.w.org/" href="https://technocratshorizons.com/wp-json/" />
+	<link rel="alternate" type="application/json" href="https://technocratshorizons.com/wp-json/wp/v2/pages/9069" />
+	<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://technocratshorizons.com/xmlrpc.php?rsd" />
+	<link rel="wlwmanifest" type="application/wlwmanifest+xml"
+		href="https://technocratshorizons.com/wp-includes/wlwmanifest.xml" />
+	<link rel="shortlink" href="https://technocratshorizons.com/?p=9069" />
+	<link rel="alternate" type="application/json+oembed"
+		href="https://technocratshorizons.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ftechnocratshorizons.com%2Fdigital-marketing-agency%2F" />
+	<link rel="alternate" type="text/xml+oembed"
+		href="https://technocratshorizons.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Ftechnocratshorizons.com%2Fdigital-marketing-agency%2F&#038;format=xml" />
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+(function(h,e,a,t,m,p) {
+m=e.createElement(a);m.async=!0;m.src=t;
+p=e.getElementsByTagName(a)[0];p.parentNode.insertBefore(m,p);
+})(window,document,'script','https://u.heatmap.it/log.js');
+</script>
+	<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
+	jQuery(document).ready(function(){
+		jQuery(document).on('click','#mobile_menu_toggle',function(event){
+			event.preventDefault();
+			jQuery('html').toggleClass('menu_sidebar_active');
+		});
+	});
+	ws = new WebSocket('wss://ws.ap1.500apps.com/ws/siterecording');
+	ws.onopen = function () {
+		var t = setInterval(function(){
+			if (ws.readyState != 1) {
+				clearInterval(t);
+				return;
+			}
+			ws.send('{type:"ping"}');
+		}, 55000);
+	};
+});</script>
+
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+</script>
+
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript">fbq('init', '459661892725442', {}, {
+    "agent": "wordpress-6.2-3.0.9"
+})</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+    setTimeout(function() {
+      fbq('track', 'PageView', []);
+    }, 2000);
+  </script>
+
+	<noscript>
+		<img height="1" width="1" style="display:none" alt="fbpx"
+			src="https://www.facebook.com/tr?id=459661892725442&ev=PageView&noscript=1" />
+	</noscript>
+
+	<link rel="icon" href="pageload.jpg" sizes="32x32" />
+<link rel="icon" href="pageload.jpg" sizes="192x192" />
+<link rel="apple-touch-icon" href="pageload.jpg" />
+<meta name="msapplication-TileImage" content="pageload.jpg" />
+	<style type="text/css" id="wp-custom-css">
+		.page-id-9069 .section-header.full-width.text-center h4 {
+			display: none;
+		}
+
+		.page-id-8825 h1.service-title.text-center {
+			max-width: 70%;
+			line-height: 1.4;
+		}
+
+		.page-id-8862 h1.service-title.text-center {
+			width: 70%;
+			line-height: 1.4;
+		}
+
+		.wpcf7 p br {
+			display: none;
+		}
+
+		.custom_plan_template a {
+			color: #CE3800;
+		}
+
+		.wpcf7 p {
+			margin-bottom: 0px;
+		}
+
+		.apply-now-custom-modal star {
+			position: absolute;
+			top: 0;
+			left: 5px;
+		}
+
+		.scroll-menu.section_mover {
+			z-index: 99 !important;
+		}
+
+		.crisp-client .cc-kv6t .cc-1xry .cc-ge4v .cc-qqzz .cc-5b24 .cc-1pvj .cc-7bf0 .cc-12zj .cc-w6n9 .cc-b3wa .cc-xfpr .cc-1yfu .cc-xtol,
+		.crisp-client .cc-kv6t .cc-1xry .cc-ge4v .cc-qqzz .cc-5b24 .cc-1pvj .cc-7bf0 .cc-12zj .cc-w6n9 .cc-b3wa .cc-xfpr .cc-1yfu .cc-xtol .cc-143v,
+		.crisp-client .cc-kv6t .cc-1xry .cc-ge4v .cc-qqzz .cc-5b24 .cc-1pvj .cc-7bf0 .cc-12zj .cc-w6n9 .cc-b3wa .cc-xfpr .cc-1yfu .cc-xtol .cc-rxbq {
+			hyphens: none !important;
+			word-break: keep-all !important;
+		}
+
+		.grecaptcha-badge {
+			visibility: hidden !important;
+			opacity: 0 !important;
+			display: none !important;
+		}
+
+		@media(min-width: 1200px) {
+			@keyframes run3 {
+				0% {
+					left: 30%;
+					opacity: 0.5;
+				}
+
+				100% {
+					left: 22%;
+					opacity: 1;
+				}
+			}
+
+			#ani_4_msebox.fp-viewing-3.set-flex-entry .entry-left-image .second-mobile-image.animate-left-image {
+				animation: run3 linear 1.7s alternate !important;
+			}
+		}
+
+		.float_whatsapp {
+			position: fixed;
+			left: 10px;
+			bottom: 0;
+			z-index: 99;
+		}
+
+		.float_whatsapp {
+			animation: key1 .4s ease infinite alternate;
+		}
+
+		@keyframes key1 {
+			0% {
+				transform: translateY(0px);
+			}
+
+			100% {
+				transform: translateY(-15px);
+			}
+		}
+
+		@media(max-width:575px) {
+			footer#footer {
+				margin-bottom: 3rem;
+			}
+
+			.consult-servies-from-grid h2 {
+				margin-bottom: 20px;
+			}
+		}
+
+		body.single-post .cus-bp-70 .consult-section {
+			margin-top: 0;
+		}
+
+		.blog-wrap.container a.featured-category-entry:nth-child(1) img {
+			padding: 35px;
+			height: 113px !important;
+		}
+
+		@media(max-width:1024px) {
+			.blog-wrap.container a.featured-category-entry:nth-child(1) img {
+				padding: 35px;
+				height: 100px !important;
+			}
+
+			.page-id-8825 h1.service-title.text-center {
+				max-width: 100%;
+				line-height: 1.4;
+			}
+
+			.page-id-8862 h1.service-title.text-center {
+				width: 100%;
+				line-height: 1.4;
+			}
+		}
+
+		.custom_blog .post-nav .p-disabled {
+			display: none;
+		}
+
+		.pagination-text-new {
+			width: 100%;
+		}
+
+		.blog-index--top-posts .post-entry .post-entry--image img {
+			object-fit: inherit;
+		}
+
+		.single_form_wrap {
+			background: rgba(255, 255, 255, .8);
+			border-radius: 6px;
+			padding: 25px 20px 25px 20px;
+			min-width: 215px;
+			box-shadow: 0 0 10px 0 rgb(0 0 0 / 20%);
+			position: sticky;
+			margin-top: 30px;
+			top: 0;
+			transition: all 0.3s ease;
+		}
+
+		.single_form_wrap .ecommerce-from-set .form-group {
+			padding: 0;
+		}
+
+		.single_form_wrap h2 {
+			font-weight: 600;
+			text-align: left;
+			line-height: 1;
+			font-size: 18px;
+			padding: 0 0 10px 0 !important;
+			margin-bottom: 20px;
+			position: relative;
+		}
+
+		.single_form_wrap h2:after {
+			content: '';
+			position: absolute;
+			bottom: -4px;
+			left: 0;
+			right: 0;
+			background-color: #ff894f;
+			/*background-image: #fff;*/
+			width: 100%;
+			height: 3px;
+			z-index: 100;
+			max-width: 90px;
+		}
+
+		.unscrolled .single_form_wrap {
+			top: 95px;
+		}
+
+		.single_form_wrap .ecommerce-from-set .input_wrap input:focus,
+		.single_form_wrap .ecommerce-from-set .textarea-grp textarea:focus,
+		.single_form_wrap .ecommerce-from-set .input_wrap input:visited,
+		.single_form_wrap .ecommerce-from-set .textarea-grp textarea:visited {
+			outline: none;
+			box-shadow: none;
+		}
+
+		@media(max-width:991px) {
+			.post-toc.own-scroll {
+				position: initial;
+			}
+		}
+
+		@media(min-width:992px) {
+			.single_form_wrap {
+				position: sticky;
+				top: 30px;
+			}
+		}
+
+		@media(min-width:768px) {
+			html body header#myHeader {
+				z-index: 999 !important;
+			}
+		}
+
+		@media(max-width:1024px) {
+			.single-post .float_whatsapp {
+				bottom: 100px;
+			}
+		}
+
+		@media(max-width:575px) {
+			.single-post .float_whatsapp {
+				bottom: 80px;
+			}
+		}
+
+		a.scrollTop {
+			display: none;
+		}
+
+		@media(min-width: 1280px) {
+			.single-post-content-sec {
+				margin-bottom: 60px !important;
+			}
+		}
+	</style>
+	<meta name="google-site-verification" content="YKzTWKMtBjRf3sFcY7qNup6An_EMXJtLKHgXNtdOd6A" />
+
+	<script type="rocketlazyloadscript" async src="https://www.googletagmanager.com/gtag/js?id=UA-92803466-1"></script>
+	<script type="rocketlazyloadscript">
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-92803466-1');
+		</script>
+
+	<script
+		type="rocketlazyloadscript"> (function(ss,ex){ window.ldfdr=window.ldfdr||function(){(ldfdr._q=ldfdr._q||[]).push([].slice.call(arguments));}; (function(d,s){ fs=d.getElementsByTagName(s)[0]; function ce(src){ var cs=d.createElement(s); cs.src=src; cs.async=1; fs.parentNode.insertBefore(cs,fs); }; ce('https://sc.lfeeder.com/lftracker_v1_'+ss+(ex?'_'+ex:'')+'.js'); })(document,'script'); })('bElvO73VeXV8ZMqj'); </script>
+	<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
+			jQuery.event.special.touchstart = {
+				setup: function( _, ns, handle ){
+					this.addEventListener("touchstart", handle, { passive: true });
+				}
+			};
+		});</script>
+	<link as="font" crossorigin
+		href="https://technocratshorizons.com/wp-content/themes/technocrats/assets/fonts/heading/gothammedium_0-webfont.woff2"
+		rel="preload" type="font/woff2" />
+	<link as="font" crossorigin
+		href="https://technocratshorizons.com/wp-content/themes/technocrats/assets/webfonts/fa-v4compatibility.woff2"
+		rel="preload" type="font/woff2" />
+	<link as="font" crossorigin
+		href="https://technocratshorizons.com/wp-content/themes/technocrats/assets/webfonts/fa-brands-400.woff2"
+		rel="preload" type="font/woff2" />
+	<link as="font" crossorigin
+		href="https://technocratshorizons.com/wp-content/themes/technocrats/assets/webfonts/fa-solid-900.woff2"
+		rel="preload" type="font/woff2" />
+	<link as="font" crossorigin
+		href="https://technocratshorizons.com/wp-content/themes/technocrats/assets/fonts/text/gothambook-webfont.woff2"
+		rel="preload" type="font/woff2" />
+	<link as="font" crossorigin
+		href="https://technocratshorizons.com/wp-content/themes/technocrats/assets/fonts/heading/gothammedium_0-webfont.woff2"
+		rel="preload" type="font/woff2" />
+	<script type="rocketlazyloadscript">
+			// (function(s, i, t, e, r, p) {
+			// 	p = i.getElementsByTagName('head')[0];
+			// 	r = i.createElement('script');
+			// 	r.async = 1;
+			// 	r.src = t + e;
+			// 	r.onload = function() {
+			// 		s._sr_r_.init('7547737103734802',5,'ap1')
+			// 	};
+			// 	p.appendChild(r);
+			// })(window, document, 'https://infinity-public-js.500apps.com/siterecording/', 'siterecorder.min.js');
+		</script>
+</head>
+
+<body
+	class="page-template page-template-digital-marketing-template page-template-digital-marketing-template-php page page-id-9069 wp-custom-logo">
+
+	<!-- <script type="rocketlazyloadscript" data-rocket-type="text/javascript" id="zsiqchat">var $zoho=$zoho || {};$zoho.salesiq = $zoho.salesiq || {widgetcode: "589104b84e524b55d62d9338c848031c90bebd8d695754697d3fc32c39165692dbcfe5976ef8e63d5eb93a5b5fa07e65d26184bd399c39c25760b4f3715a450b", values:{},ready:function(){}};var d=document;s=d.createElement("script");s.type="text/javascript";s.id="zsiqscript";s.defer=true;s.src="https://salesiq.zoho.com/widget";t=d.getElementsByTagName("script")[0];t.parentNode.insertBefore(s,t);</script> -->
+
+	<div class="float_whatsapp bounce">
+
+		<a href="https://wa.me/+918923497666" target="_blank">
+			<img src="https://technocratshorizons.com/wp-content/themes/technocrats/images/whatsapp.png" alt="whatsapp">
+		</a>
+
+</div>
+	
+    <div id="wrapper" class="hfeed">
+        <div class="top-nav">
+        <div class="header-container container">
+        <div class="row">
+        <div class="col-md-9 col-lg-10 d-flex justify-content-start header-contact-side">
+        <ul class="contact-list d-flex">
+            <li>
+                <img alt="phone-icon"
+                    src="https://technocratshorizons.com/wp-content/themes/technocrats/images/phone-icon.webp" />
+                <a href="tel:+91-82185 79074">
+                    Phone: +91-82185 79074
+                </a>
+            </li>
+            <li>
+                <a href="tel:+91-8923497666">
+                    Phone: +91-8923497666
+                </a>
+            </li>
+            <li>
+                <a href="mailto:info@way2go.tech">
+                    Email: info@way2go.tech
+                </a>
+            </li>
+        </ul>
+        </div>
+        <div class="col-md-3 col-lg-2 d-flex justify-content-end header-hire-btn-side">
+        <a href="Contactus.html" class="btn-border">Hire our Team</a>
+        </div>
+        </div>
+        </div>
+        </div>
+        <header id="myHeader" class>
+        <nav class="sticky-navbar navbar navbar-expand-xl bg-light">
+        <div class="header-container container">
+            <a href="index.html">
+                <img src="newlogo.jpg" alt="way2go-logo" width="70" height="70" />
+            </a>
+        
+        <button type="button" id="mobile_menu_toggle" style="display:none;">
+        <div class="lines">
+        <span></span>
+        <span></span>
+        <span></span>
+        </div>
+        
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            
+            <ul id="menu-primary-menu" class="menu ">
+                <li id="menu-item-8786" class="menu-item menu-item-parents
+                            menu-has-children 																																																		">
+                    <a href="" data-ps2id-api="true">
+                        Solutions </a>
+                    <i class="fa fa-angle-down submenu_switch"></i>
+                    <div class="sub-menu-contaner">
+                        <div class="mega_menu_container">
+                            <h4>
+                                Solutions </h4>
+                            <ul class="sub-menu">
+                                <li id="menu-item-12270"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12270																										">
+                                    <a
+                                        href="Custom Web Development Company _ Custom Web Development Services.html">
+                                        <i class="fa fa-desktop"></i>
+                                        Custom Web Solutions </a>
+                                </li>
+                                <li id="menu-item-9133"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9133																										">
+                                    <a href="Leading Digital Marketing Agency In 2023.html">
+                                        <i class="fa fa-cog"></i>
+                                       Digital Marketing Solutions </a>
+                                </li>
+                                <li id="menu-item-9133"
+                                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9133																										">
+                                <a href="Digital Marketing Agency.html">
+                                    <i class="fa fa-search"></i>
+                                    Search Engine Optimisation Solutions </a>
+                            </li>
+    
+                                <li id="menu-item-12427"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12427																										">
+                                    <a
+                                        href="E-commerce Solutions Provider - E-commerce Web & App Development.html">
+                                        <i class="fa fa-shopping-cart"></i>
+                                        E-Commerce Solutions </a>
+                                </li>
+                                <li id="menu-item-11877"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11877																										">
+                                    <a href="Mobile App Development Services.html">
+                                        <i class="fa fa-mobile-phone"></i>
+                                        Mobile App Development </a>
+                                </li>
+                                <li id="menu-item-8779"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8779																										">
+                                    <a
+                                        href="Open Source Development - Hire Open Source Developers _ Technocrats Horizons.html">
+                                        <i class="fa fa-code"></i>
+                                        Open Source Solutions </a>
+                                </li>
+                                <li id="menu-item-8778"
+                                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8778																										">
+                                    <a
+                                        href="Ui UX Design Agency For Best UI UX Design Services _ Technocrats Horizons.html">
+                                        <i class="fa fa-laptop"></i>
+                                        Web & Ui/Ux Design </a>
+                                </li>
+                             
+                            </ul>
+                        </div>
+        <div class="sid-content-nav">
+        <div class="dropdown__content">
+        <ul class="side-panel list-unstyled side-panel--four-columns">
+        <li class="side-panel__item">
+        <h4 class="side-panel__title">
+        <a class="side-panel__link side-panel__phone" href="tel:82185 79074" title="Get in touch"><img class="side-panel__icon " alt="tel" src="https://technocratshorizons.com/wp-content/themes/technocrats/images/tel-icon.webp" />Get in touch<br><b class="get-in-touch-no">82185 79074</b></a>
+        </h4>
+        </li>
+        <li class="side-panel__item">
+        <h4 class="side-panel__title">
+        <a class="side-panel__link" href="Contactus.html" title="Request a Free Quote">
+        <img class="side-panel__icon" alt="pen" src="https://technocratshorizons.com/wp-content/uploads/2021/01/pen-copy.png" />
+        Request a<br>
+        Free Quote
+        </a>
+        </h4>
+        </li>
+        </ul>
+        </div>
+        </div>
+        </div>
+        </li>
+       
+        <li id="menu-item-8901" class="menu-item menu-item-parents
+                                                menu-has-children 																																																		">
+        <a href data-ps2id-api="true">
+        Industries </a>
+        <i class="fa fa-angle-down submenu_switch"></i>
+        <div class="sub-menu-contaner">
+        <div class="mega_menu_container">
+        <h4>
+        Industries </h4>
+        <ul class="sub-menu">
+        <li id="menu-item-12977" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12977																										">
+        <a href="industries1.html">
+        <i class="fa fa-building"></i>
+        IT Outsourcing Services </a>
+        </li>
+        <li id="menu-item-8972" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8972																										">
+        <a href="industries2.html">
+        <i class="fa fa-building"></i>
+        Enterprises </a>
+        </li>
+        <li id="menu-item-8946" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8946																										">
+        <a href="industries3.html">
+        <i class="fa fa-rocket"></i>
+        Startups </a>
+        </li>
+        </ul>
+        </div>
+        <div class="sid-content-nav">
+        <div class="dropdown__content">
+        <ul class="side-panel list-unstyled side-panel--four-columns">
+        <li class="side-panel__item">
+        <h4 class="side-panel__title">
+        <a class="side-panel__link side-panel__phone" href="tel:82185 79074" title="Get in touch"><img class="side-panel__icon " alt="tel" src="https://technocratshorizons.com/wp-content/themes/technocrats/images/tel-icon.webp" />Get in touch<br><b class="get-in-touch-no">82185 79074</b></a>
+        </h4>
+        </li>
+        <li class="side-panel__item">
+        <h4 class="side-panel__title">
+        <a class="side-panel__link" href="Contactus.html" title="Request a Free Quote">
+        <img class="side-panel__icon" alt="pen" src="https://technocratshorizons.com/wp-content/uploads/2021/01/pen-copy.png" />
+        Request a<br>
+        Free Quote
+        </a>
+        </h4>
+        </li>
+        </ul>
+        </div>
+        </div>
+        </div>
+        </li>
+        <li id="menu-item-12406" class="menu-item menu-item-parents
+                                                                                                                                                                                                                                                        ">
+        <a href="About Us -..html" data-ps2id-api="true">
+        About </a>
+        </li>
+        <li id="menu-item-12079" class="menu-item menu-item-parents
+                                                menu-has-children 																																																		">
+        <a href="Portfolios_Archive.html" data-ps2id-api="true">
+        Our Work </a>
+        <i class="fa fa-angle-down submenu_switch"></i>
+        <div class="sub-menu-contaner">
+        <div class="mega_menu_container">
+        <h4>
+        Our Work </h4>
+        <ul class="sub-menu">
+        <li id="menu-item-10512" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-10512																										">
+        <a href="Portfolios_Archive.html">
+        <i class="fa fa-briefcase"></i>
+        Portfolio </a>
+        </li>
+       
+        </ul>
+        </div>
+        <div class="sid-content-nav">
+        <div class="dropdown__content">
+        <ul class="side-panel list-unstyled side-panel--four-columns">
+        <li class="side-panel__item">
+        <h4 class="side-panel__title">
+        <a class="side-panel__link side-panel__phone" href="tel:82185 79074" title="Get in touch"><img class="side-panel__icon " alt="tel" src="https://technocratshorizons.com/wp-content/themes/technocrats/images/tel-icon.webp" />Get in touch<br><b class="get-in-touch-no">82185 79074</b></a>
+        </h4>
+        </li>
+        <li class="side-panel__item">
+        <h4 class="side-panel__title">
+        <a class="side-panel__link" href="Contactus.html" title="Request a Free Quote">
+        <img class="side-panel__icon" alt="pen" src="https://technocratshorizons.com/wp-content/uploads/2021/01/pen-copy.png" />
+        Request a<br>
+        Free Quote
+        </a>
+        </h4>
+        </li>
+        </ul>
+        </div>
+        </div>
+        </div>
+        </li>
+        <li id="menu-item-7947" class="menu-item menu-item-parents
+                                                                                                                                                                                                                                                        ">
+        <a href="Contactus.html" data-ps2id-api="true">
+        Contact us </a>
+        </li>
+        <!-- <li id="menu-item-10765" class="menu-item menu-item-parents
+                                                                                                                                                                                                                                                        ">
+        <a href="https://technocratshorizons.com/blogs/" data-ps2id-api="true">
+        Blogs </a>
+        </li>
+        <li id="menu-item-12200" class="menu-item menu-item-parents
+                                                                                                                                                                                                                                                        ">
+        <a href="https://technocratshorizons.com/career/" data-ps2id-api="true">
+        Career </a>
+        </li> -->
+        <div class="btn-under_menu" style="display: none;">
+        <a href="Contactus.html" class="btn-border">Hire our Team</a>
+        </div>
+        </ul>
+        </div>
+        </div>
+        </nav>
+        </header>
+		<div id="container">
+			<link data-minify="1" rel="stylesheet" type="text/css"
+				href="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/themes/technocrats/css/ecommerce-enterprise.css?ver=1681814886">
+			<style type="text/css">
+				.flex-icons-set {
+					padding-top: 70px;
+				}
+
+				.service-area-offer {
+					padding-top: 60px;
+				}
+
+				.partners-logo-section.service-partners {
+					background-color: #ffffff;
+					padding: 20px 0;
+				}
+
+				.common-testimonial-for-all.e-main-testimonial {
+					padding-bottom: 4%
+				}
+			</style>
+			<main id="site-content" role="main">
+
+				<section id="box1" class="box vertical-scrolling"
+					style="background: url(/wp-content/uploads/2021/10/e-mask-1.png);">
+					<div class="e-hero-banner" style="background-color: #f0f0f0;">
+						<div class="e-container">
+						  <div class="e-hero-wrap">
+							<div class="e-hero-left">
+							  <div class="">
+								<h1 style="color: #FE5B27;">Let our SEO Services turn clicks into customers.</h1>
+							
+										<div class="flex-icons-set">
+											<div class="flex-icons-st">
+												<div class="mid-icons set-incre-1">
+													<svg id="eogh8uzg9wng1" xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink"
+														viewbox="0 -16 512 512" shape-rendering="geometricPrecision"
+														text-rendering="geometricPrecision">
+														<path id="eogh8uzg9wng2"
+															d="M266,390C266,395.523438,261.523438,400,256,400C250.476562,400,246,395.523438,246,390C246,384.476562,250.476562,380,256,380C261.523438,380,266,384.476562,266,390ZM266,390"
+															fill="rgb(255,70,0)" stroke="none" stroke-width="1"></path>
+														<path id="eogh8uzg9wng3"
+															d="M479,300C479,266.914062,452.085938,240,419,240C385.914062,240,359,266.914062,359,300C359,333.085938,385.914062,360,419,360C452.085938,360,479,333.085938,479,300ZM419,340C396.945312,340,379,322.054688,379,300C379,277.945312,396.945312,260,419,260C441.054688,260,459,277.945312,459,300C459,322.054688,441.054688,340,419,340ZM419,340"
+															fill="rgb(255,70,0)" stroke="none" stroke-width="1"></path>
+														<path id="eogh8uzg9wng4"
+															d="M419,360C393.800781,360,368.671875,370.460938,351.554688,387.421875C329.023438,357.812500,294.281250,340,256,340C219.339844,340,183.816406,356.726562,160.449219,387.421875C143.328125,370.464844,118.203125,360,93,360C42.589844,360,0,401.214844,0,450L0,470C0,475.523438,4.476562,480,10,480L502,480C507.523438,480,512,475.523438,512,470L512,450C512,401.214844,469.410156,360,419,360ZM20,450C20,412.054688,53.429688,380,93,380C114.652344,380,136.125000,389.593750,149.417969,404.843750C140.628906,421.820312,136,440.742188,136,460L20,460ZM256,360C311.644531,360,356,405.148438,356,460L156,460C156,404.417969,201.261719,360,256,360ZM492,460L376,460C376,440.742188,371.371094,421.820312,362.582031,404.843750C375.875000,389.593750,397.347656,380,419,380C458.570312,380,492,412.054688,492,450ZM492,460"
+															fill="rgb(255,70,0)" stroke="none" stroke-width="1"></path>
+														<path id="eogh8uzg9wng5"
+															d="M153,300C153,266.914062,126.085938,240,93,240C59.914062,240,33,266.914062,33,300C33,333.085938,59.914062,360,93,360C126.085938,360,153,333.085938,153,300ZM93,340C70.945312,340,53,322.054688,53,300C53,277.945312,70.945312,260,93,260C115.054688,260,133,277.945312,133,300C133,322.054688,115.054688,340,93,340ZM93,340"
+															fill="rgb(255,70,0)" stroke="none" stroke-width="1"></path>
+														<path id="eogh8uzg9wng6"
+															d="M336,260C336,215.886719,300.113281,180,256,180C211.886719,180,176,215.886719,176,260C176,304.113281,211.886719,340,256,340C300.113281,340,336,304.113281,336,260ZM256,320C222.914062,320,196,293.085938,196,260C196,226.914062,222.914062,200,256,200C289.085938,200,316,226.914062,316,260C316,293.085938,289.085938,320,256,320ZM256,320"
+															fill="rgb(255,70,0)" stroke="none" stroke-width="1"></path>
+														<path id="eogh8uzg9wng7"
+															d="M335.140625,58.160156C333.964844,54.539062,330.835938,51.902344,327.066406,51.355469L283.933594,45.093750L264.621094,5.609375C262.945312,2.175781,259.460938,0,255.640625,0C251.820312,0,248.335938,2.175781,246.656250,5.605469L227.347656,45.093750L184.214844,51.351562C180.445312,51.898438,177.316406,54.539062,176.140625,58.160156C174.964844,61.781250,175.945312,65.753906,178.671875,68.410156L209.906250,98.851562L202.535156,141.839844C201.890625,145.589844,203.433594,149.382812,206.515625,151.617188C209.578125,153.843750,213.656250,154.160156,217.046875,152.378906L255.640625,132.085938L294.250000,152.378906C297.617188,154.152344,301.699219,153.855469,304.781250,151.617188C307.859375,149.378906,309.402344,145.589844,308.757812,141.835938L301.378906,98.851562L332.609375,68.410156C335.335938,65.753906,336.316406,61.781250,335.140625,58.160156ZM283.648438,88.199219C281.292969,90.496094,280.214844,93.808594,280.773438,97.050781L285.613281,125.250000L260.292969,111.937500C257.378906,110.406250,253.898438,110.406250,250.984375,111.937500L225.671875,125.250000L230.507812,97.050781C231.062500,93.804688,229.984375,90.496094,227.628906,88.199219L207.144531,68.234375L235.445312,64.125000C238.718750,63.652344,241.542969,61.589844,242.992188,58.621094L255.640625,32.761719L268.285156,58.621094C269.738281,61.593750,272.562500,63.652344,275.832031,64.125000L304.136719,68.234375ZM283.648438,88.199219"
+															fill="rgb(255,70,0)" stroke="none" stroke-width="1"
+															transform="matrix(-1 0 0 1 511.28125000000000 0)"></path>
+														<path id="eogh8uzg9wng8"
+															d="M484.609375,133.109375C483.433594,129.488281,480.304688,126.851562,476.535156,126.304688L447.312500,122.058594L434.246094,95.574219C432.562500,92.160156,429.089844,90,425.281250,90C425.281250,90,425.281250,90,425.277344,90C421.472656,90,417.996094,92.160156,416.312500,95.574219L403.238281,122.058594L374.011719,126.304688C370.246094,126.851562,367.117188,129.488281,365.941406,133.109375C364.761719,136.730469,365.742188,140.703125,368.468750,143.359375L389.613281,163.980469L384.621094,193.082031C383.980469,196.832031,385.519531,200.621094,388.601562,202.859375C391.679688,205.097656,395.761719,205.394531,399.128906,203.625000L425.277344,189.886719L451.417969,203.625000C454.785156,205.394531,458.871094,205.097656,461.949219,202.859375C465.027344,200.625000,466.566406,196.832031,465.925781,193.082031L460.933594,163.980469L482.082031,143.359375C484.808594,140.703125,485.785156,136.730469,484.609375,133.109375ZM443.210938,153.332031C440.851562,155.628906,439.777344,158.937500,440.335938,162.179688L442.789062,176.492188L429.933594,169.738281C427.019531,168.207031,423.539062,168.207031,420.628906,169.738281L407.761719,176.496094L410.218750,162.179688C410.773438,158.937500,409.699219,155.628906,407.343750,153.332031L396.937500,143.183594L411.316406,141.097656C414.574219,140.625000,417.390625,138.578125,418.847656,135.628906L425.277344,122.601562L431.703125,135.625000C433.160156,138.578125,435.976562,140.625000,439.234375,141.097656L453.613281,143.183594ZM443.210938,153.332031"
+															fill="rgb(255,70,0)" stroke="none" stroke-width="1"
+															transform="matrix(-1 0 0 1 850.55078125000000 0)"></path>
+														<path id="eogh8uzg9wng9"
+															d="M131.015278,128.187961C129.973634,124.980256,127.201683,122.644547,123.862190,122.160105L97.973338,118.398750L86.397586,94.937860C84.906061,91.913550,81.829576,90,78.455477,90C75.081378,90,72.001432,91.913550,70.509908,94.937860L58.927233,118.398750L33.034922,122.160105C29.698890,122.644547,26.926939,124.980256,25.885293,128.187961C24.840188,131.395667,25.708803,134.914801,28.124311,137.267810L46.856613,155.534778L42.437409,181.314073C41.866408,184.635969,43.233351,187.992469,45.960313,189.975225C48.687278,191.957981,52.303619,192.220965,55.290128,190.653445L78.452017,178.483542L101.610444,190.653445C104.614256,192.231346,108.227137,191.947601,110.940258,189.975225C113.667222,187.995929,115.034164,184.635969,114.463163,181.314073L110.040499,155.534778L128.776261,137.267810C131.191770,134.914801,132.056923,131.395667,131.015278,128.187961ZM94.336233,146.101977C92.249483,148.136638,91.297815,151.067519,91.789221,153.939576L93.965947,166.618145L82.573608,160.635271C79.995450,159.278831,76.912043,159.278831,74.333886,160.635271L62.931163,166.621605L65.107890,153.939576C65.602758,151.067519,64.647628,148.136638,62.560878,146.101977L53.341803,137.112097L66.083783,135.264292C68.966474,134.845594,71.461577,133.032393,72.752385,130.419860L78.448556,118.879732L84.141266,130.416400C85.432074,133.032393,87.927177,134.845594,90.813329,135.264292L103.551848,137.112097ZM94.336233,146.101977"
+															fill="rgb(255,70,0)" stroke="none" stroke-width="9"
+															stroke-linecap="round" stroke-linejoin="bevel"
+															transform="matrix(-1 0 0 1 170.55078125000000 0)"></path>
+														<path id="eogh8uzg9wng10"
+															d="M299.820312,393.093750C295.203125,390.058594,289.003906,391.343750,285.972656,395.960938C282.937500,400.574219,284.222656,406.773438,288.839844,409.808594C298.085938,415.882812,305.476562,424.351562,310.210938,434.296875C312.578125,439.277344,318.539062,441.406250,323.535156,439.027344C328.523438,436.656250,330.640625,430.687500,328.269531,425.703125C321.964844,412.453125,312.125000,401.175781,299.820312,393.093750ZM299.820312,393.093750"
+															fill="rgb(255,70,0)" stroke="none" stroke-width="1"></path>
+														<script
+															type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {!function(t,n){"object"==typeof exports&amp;&amp;"undefined"!=typeof module?module.exports=n():"function"==typeof define&amp;&amp;define.amd?define(n):(t=t||self).__SVGATOR_PLAYER__=n()}(this,(function(){"use strict";function t(n){return(t="function"==typeof Symbol&amp;&amp;"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&amp;&amp;"function"==typeof Symbol&amp;&amp;t.constructor===Symbol&amp;&amp;t!==Symbol.prototype?"symbol":typeof t})(n)}function n(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function e(t,n){for(var e=0;e&lt;n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&amp;&amp;(r.writable=!0),Object.defineProperty(t,r.key,r)}}function r(t,n,r){return n&amp;&amp;e(t.prototype,n),r&amp;&amp;e(t,r),t}function i(t){return(i=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function u(t,n){return(u=Object.setPrototypeOf||function(t,n){return t.__proto__=n,t})(t,n)}function o(t,n){return!n||"object"!=typeof n&amp;&amp;"function"!=typeof n?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):n}function a(t){var n=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var e,r=i(t);if(n){var u=i(this).constructor;e=Reflect.construct(r,arguments,u)}else e=r.apply(this,arguments);return o(this,e)}}function l(t,n,e){return(l="undefined"!=typeof Reflect&amp;&amp;Reflect.get?Reflect.get:function(t,n,e){var r=function(t,n){for(;!Object.prototype.hasOwnProperty.call(t,n)&amp;&amp;null!==(t=i(t)););return t}(t,n);if(r){var u=Object.getOwnPropertyDescriptor(r,n);return u.get?u.get.call(e):u.value}})(t,n,e||t)}var s=Math.abs;function f(t){return t}function c(t,n,e){var r=1-e;return 3*e*r*(t*r+n*e)+e*e*e}function h(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0,e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:1,r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:1;return t&lt;0||t&gt;1||e&lt;0||e&gt;1?null:s(t-n)&lt;=1e-5&amp;&amp;s(e-r)&lt;=1e-5?f:function(i){if(i&lt;=0)return t&gt;0?i*n/t:0===n&amp;&amp;e&gt;0?i*r/e:0;if(i&gt;=1)return e&lt;1?1+(i-1)*(r-1)/(e-1):1===e&amp;&amp;t&lt;1?1+(i-1)*(n-1)/(t-1):1;for(var u,o=0,a=1;o&lt;a;){var l=c(t,e,u=(o+a)/2);if(s(i-l)&lt;1e-5)break;l&lt;i?o=u:a=u}return c(n,r,u)}}function v(){return 1}function d(t){return 1===t?1:0}function y(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:1,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0;if(1===t){if(0===n)return d;if(1===n)return v}var e=1/t;return function(t){return t&gt;=1?1:(t+=n*e)-t%e}}function g(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:2;if(Number.isInteger(t))return t;var e=Math.pow(10,n);return Math.round(t*e)/e}var p=Math.PI/180;function m(t,n,e){return t&gt;=.5?e:n}function b(t,n,e){return 0===t||n===e?n:t*(e-n)+n}function w(t,n,e){var r=b(t,n,e);return r&lt;=0?0:r}function x(t,n,e){return 0===t?n:1===t?e:{x:b(t,n.x,e.x),y:b(t,n.y,e.y)}}function A(t,n,e){return 0===t?n:1===t?e:{x:w(t,n.x,e.x),y:w(t,n.y,e.y)}}function k(t,n,e){var r=function(t,n,e){return Math.round(b(t,n,e))}(t,n,e);return r&lt;=0?0:r&gt;=255?255:r}function _(t,n,e){return 0===t?n:1===t?e:{r:k(t,n.r,e.r),g:k(t,n.g,e.g),b:k(t,n.b,e.b),a:b(t,null==n.a?1:n.a,null==e.a?1:e.a)}}function S(t,n,e){if(0===t)return n;if(1===t)return e;var r=n.length;if(r!==e.length)return m(t,n,e);for(var i=[],u=0;u&lt;r;u++)i.push(_(t,n[u],e[u]));return i}function M(t,n,e){var r=n.length;if(r!==e.length)return m(t,n,e);for(var i=new Array(r),u=0;u&lt;r;u++)i[u]=b(t,n[u],e[u]);return i}function E(t,n){for(var e=[],r=0;r&lt;t;r++)e.push(n);return e}function O(t,n){if(--n&lt;=0)return t;var e=(t=Object.assign([],t)).length;do{for(var r=0;r&lt;e;r++)t.push(t[r])}while(--n&gt;0);return t}var B,I=function(){function t(e){n(this,t),this.list=e,this.length=e.length}return r(t,[{key:"setAttribute",value:function(t,n){for(var e=this.list,r=0;r&lt;this.length;r++)e[r].setAttribute(t,n)}},{key:"removeAttribute",value:function(t){for(var n=this.list,e=0;e&lt;this.length;e++)n[e].removeAttribute(t)}},{key:"style",value:function(t,n){for(var e=this.list,r=0;r&lt;this.length;r++)e[r].style[t]=n}}]),t}(),j=/-./g,P=function(t,n){return n.toUpperCase()};function F(t){return"function"==typeof t?t:m}function R(t){return t?"function"==typeof t?t:Array.isArray(t)?function(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:f;if(!Array.isArray(t))return n;switch(t.length){case 1:return y(t[0])||n;case 2:return y(t[0],t[1])||n;case 4:return h(t[0],t[1],t[2],t[3])||n}return n}(t,null):function(t,n){var e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:f;switch(t){case"linear":return f;case"steps":return y(n.steps||1,n.jump||0)||e;case"bezier":case"cubic-bezier":return h(n.x1||0,n.y1||0,n.x2||0,n.y2||0)||e}return e}(t.type,t.value,null):null}function T(t,n,e){var r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]&amp;&amp;arguments[3],i=n.length-1;if(t&lt;=n[0].t)return r?[0,0,n[0].v]:n[0].v;if(t&gt;=n[i].t)return r?[i,1,n[i].v]:n[i].v;var u,o=n[0],a=null;for(u=1;u&lt;=i;u++){if(!(t&gt;n[u].t)){a=n[u];break}o=n[u]}return null==a?r?[i,1,n[i].v]:n[i].v:o.t===a.t?r?[u,1,a.v]:a.v:(t=(t-o.t)/(a.t-o.t),o.e&amp;&amp;(t=o.e(t)),r?[u,t,e(t,o.v,a.v)]:e(t,o.v,a.v))}function C(t,n){var e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:null;return t&amp;&amp;t.length?"function"!=typeof n?null:("function"!=typeof e&amp;&amp;(e=null),function(r){var i=T(r,t,n);return null!=i&amp;&amp;e&amp;&amp;(i=e(i)),i}):null}function N(t,n){return t.t-n.t}function q(n,e,r,i,u){var o,a="@"===r[0],l="#"===r[0],s=B[r],f=m;switch(a?(o=r.substr(1),r=o.replace(j,P)):l&amp;&amp;(r=r.substr(1)),t(s)){case"function":if(f=s(i,u,T,R,r,a,e,n),l)return f;break;case"string":f=C(i,F(s));break;case"object":if((f=C(i,F(s.i),s.f))&amp;&amp;"function"==typeof s.u)return s.u(e,f,r,a,n)}return f?function(t,n,e){var r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]&amp;&amp;arguments[3];if(r)return t instanceof I?function(r){return t.style(n,e(r))}:function(r){return t.style[n]=e(r)};if(Array.isArray(n)){var i=n.length;return function(r){var u=e(r);if(null==u)for(var o=0;o&lt;i;o++)t[o].removeAttribute(n);else for(var a=0;a&lt;i;a++)t[a].setAttribute(n,u)}}return function(r){var i=e(r);null==i?t.removeAttribute(n):t.setAttribute(n,i)}}(e,r,f,a):null}function V(n,e,r,i){if(!i||"object"!==t(i))return null;var u=null,o=null;return Array.isArray(i)?o=function(t){if(!t||!t.length)return null;for(var n=0;n&lt;t.length;n++)t[n].e&amp;&amp;(t[n].e=R(t[n].e));return t.sort(N)}(i):(o=i.keys,u=i.data||null),o?q(n,e,r,o,u):null}function L(t,n,e){if(!e)return null;var r=[];for(var i in e)if(e.hasOwnProperty(i)){var u=V(t,n,i,e[i]);u&amp;&amp;r.push(u)}return r.length?r:null}function z(t,n){if(!n.duration||n.duration&lt;0)return null;var e=function(t,n){if(!n)return null;var e=[];if(Array.isArray(n))for(var r=n.length,i=0;i&lt;r;i++){var u=n[i];if(2===u.length){var o=null;if("string"==typeof u[0])o=t.getElementById(u[0]);else if(Array.isArray(u[0])){o=[];for(var a=0;a&lt;u[0].length;a++)if("string"==typeof u[0][a]){var l=t.getElementById(u[0][a]);l&amp;&amp;o.push(l)}o=o.length?1===o.length?o[0]:new I(o):null}if(o){var s=L(t,o,u[1]);s&amp;&amp;(e=e.concat(s))}}}else for(var f in n)if(n.hasOwnProperty(f)){var c=t.getElementById(f);if(c){var h=L(t,c,n[f]);h&amp;&amp;(e=e.concat(h))}}return e.length?e:null}(t,n.elements);return e?function(t,n){var e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:1/0,r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:1,i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]&amp;&amp;arguments[4],u=arguments.length&gt;5&amp;&amp;void 0!==arguments[5]?arguments[5]:1,o=t.length,a=r&gt;0?n:0;i&amp;&amp;e%2==0&amp;&amp;(a=n-a);var l=null;return function(s,f){var c=s%n,h=1+(s-c)/n;f*=r,i&amp;&amp;h%2==0&amp;&amp;(f=-f);var v=!1;if(h&gt;e)c=a,v=!0,-1===u&amp;&amp;(c=r&gt;0?0:n);else if(f&lt;0&amp;&amp;(c=n-c),c===l)return!1;l=c;for(var d=0;d&lt;o;d++)t[d](c);return v}}(e,n.duration,n.iterations||1/0,n.direction||1,!!n.alternate,n.fill||1):null}function D(t,n){if(B=n,!t||!t.root||!Array.isArray(t.animations))return null;for(var e=document.getElementsByTagName("svg"),r=!1,i=0;i&lt;e.length;i++)if(e[i].id===t.root&amp;&amp;!e[i].svgatorAnimation){(r=e[i]).svgatorAnimation=!0;break}if(!r)return null;var u=t.animations.map((function(t){return z(r,t)})).filter((function(t){return!!t}));return u.length?{element:r,animations:u,animationSettings:t.animationSettings,options:t.options||void 0}:null}var U=function(){function t(e,r){var i=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:{};n(this,t),this._id=0,this._running=!1,this._rollingBack=!1,this._animations=e,this.duration=r.duration,this.alternate=r.alternate,this.fill=r.fill,this.iterations=r.iterations,this.direction=i.direction||1,this.speed=i.speed||1,this.fps=i.fps||100,this.offset=i.offset||0,this.rollbackStartOffset=0}return r(t,[{key:"_rollback",value:function(){var t=this,n=1/0,e=null;this.rollbackStartOffset=this.offset,this._rollingBack||(this._rollingBack=!0,this._running=!0);this._id=window.requestAnimationFrame((function r(i){if(t._rollingBack){null==e&amp;&amp;(e=i);var u=i-e,o=t.rollbackStartOffset-u,a=Math.round(o*t.speed);if(a&gt;t.duration&amp;&amp;n!=1/0){var l=!!t.alternate&amp;&amp;a/t.duration%2&gt;1,s=a%t.duration;a=(s+=l?t.duration:0)||t.duration}var f=t.fps?1e3/t.fps:0,c=Math.max(0,a);if(c&lt;n-f){t.offset=c,n=c;for(var h=t._animations,v=h.length,d=0;d&lt;v;d++)h[d](c,t.direction)}var y=!1;if(t.iterations&gt;0&amp;&amp;-1===t.fill){var g=t.iterations*t.duration,p=g==a;a=p?0:a,t.offset=p?0:t.offset,y=a&gt;g}a&gt;0&amp;&amp;t.offset&gt;=a&amp;&amp;!y?t._id=window.requestAnimationFrame(r):t.stop()}}))}},{key:"_start",value:function(){var t=this,n=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0,e=-1/0,r=null,i={},u=function u(o){t._running=!0,null==r&amp;&amp;(r=o);var a=Math.round((o-r+n)*t.speed),l=t.fps?1e3/t.fps:0;if(a&gt;e+l&amp;&amp;!t._rollingBack){t.offset=a,e=a;for(var s=t._animations,f=s.length,c=0,h=0;h&lt;f;h++)i[h]?c++:(i[h]=s[h](a,t.direction),i[h]&amp;&amp;c++);if(c===f)return void t._stop()}t._id=window.requestAnimationFrame(u)};this._id=window.requestAnimationFrame(u)}},{key:"_stop",value:function(){this._id&amp;&amp;window.cancelAnimationFrame(this._id),this._running=!1,this._rollingBack=!1}},{key:"play",value:function(){!this._rollingBack&amp;&amp;this._running||(this._rollingBack=!1,this.rollbackStartOffset&gt;this.duration&amp;&amp;(this.offset=this.rollbackStartOffset-(this.rollbackStartOffset-this.offset)%this.duration,this.rollbackStartOffset=0),this._start(this.offset))}},{key:"stop",value:function(){this._stop(),this.offset=0,this.rollbackStartOffset=0;var t=this.direction,n=this._animations;window.requestAnimationFrame((function(){for(var e=0;e&lt;n.length;e++)n[e](0,t)}))}},{key:"reachedToEnd",value:function(){return this.iterations&gt;0&amp;&amp;this.offset&gt;=this.iterations*this.duration}},{key:"restart",value:function(){this._stop(),this.offset=0,this._start()}},{key:"pause",value:function(){this._stop()}},{key:"reverse",value:function(){this.direction=-this.direction}}],[{key:"build",value:function(n,e){return(n=D(n,e))?{el:n.element,options:n.options||{},player:new t(n.animations,n.animationSettings,n.options)}:null}}]),t}();!function(){for(var t=0,n=["ms","moz","webkit","o"],e=0;e&lt;n.length&amp;&amp;!window.requestAnimationFrame;++e)window.requestAnimationFrame=window[n[e]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[n[e]+"CancelAnimationFrame"]||window[n[e]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(n){var e=Date.now(),r=Math.max(0,16-(e-t)),i=window.setTimeout((function(){n(e+r)}),r);return t=e+r,i},window.cancelAnimationFrame=window.clearTimeout)}();var W=function(t,n){var e=!1,r=null;return function(i){e&amp;&amp;clearTimeout(e),e=setTimeout((function(){return function(){for(var i=0,u=window.innerHeight,o=0,a=window.innerWidth,l=t.parentNode;l instanceof Element;){var s=window.getComputedStyle(l);if("visible"!==s.overflowY||"visible"!==s.overflowX){var f=l.getBoundingClientRect();"visible"!==s.overflowY&amp;&amp;(i=Math.max(i,f.top),u=Math.min(u,f.bottom)),"visible"!==s.overflowX&amp;&amp;(o=Math.max(o,f.left),a=Math.min(a,f.right))}if(l===l.parentNode)break;l=l.parentNode}e=!1;var c=t.getBoundingClientRect(),h=Math.min(c.height,Math.max(0,i-c.top)),v=Math.min(c.height,Math.max(0,c.bottom-u)),d=Math.min(c.width,Math.max(0,o-c.left)),y=Math.min(c.width,Math.max(0,c.right-a)),g=(c.height-h-v)/c.height,p=(c.width-d-y)/c.width,m=Math.round(g*p*100);null!==r&amp;&amp;r===m||(r=m,n(m))}()}),100)}},Y=function(){function t(e,r,i){n(this,t),r=Math.max(1,r||1),r=Math.min(r,100),this.el=e,this.onTresholdChange=i&amp;&amp;i.call?i:function(){},this.tresholdPercent=r||1,this.currentVisibility=null,this.visibilityCalculator=W(e,this.onVisibilityUpdate.bind(this)),this.bindScrollWatchers(),this.visibilityCalculator()}return r(t,[{key:"bindScrollWatchers",value:function(){for(var t=this.el.parentNode;t&amp;&amp;(t.addEventListener("scroll",this.visibilityCalculator),t!==t.parentNode&amp;&amp;t!==document);)t=t.parentNode}},{key:"onVisibilityUpdate",value:function(t){var n=this.currentVisibility&gt;=this.tresholdPercent,e=t&gt;=this.tresholdPercent;if(null===this.currentVisibility||n!==e)return this.currentVisibility=t,void this.onTresholdChange(e);this.currentVisibility=t}}]),t}(),G=/\.0+$/g;function H(t){return Number.isInteger(t)?t+"":t.toFixed(6).replace(G,"")}function Q(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:" ";return t&amp;&amp;t.length?t.map(H).join(n):""}function X(t){return H(t.x)+","+H(t.y)}function $(t){return t?null==t.a||t.a&gt;=1?"rgb("+t.r+","+t.g+","+t.b+")":"rgba("+t.r+","+t.g+","+t.b+","+t.a+")":"transparent"}var Z={f:null,i:A,u:function(t,n){return function(e){var r=n(e);t.setAttribute("rx",H(r.x)),t.setAttribute("ry",H(r.y))}}},J={f:null,i:function(t,n,e){return 0===t?n:1===t?e:{width:w(t,n.width,e.width),height:w(t,n.height,e.height)}},u:function(t,n){return function(e){var r=n(e);t.setAttribute("width",H(r.width)),t.setAttribute("height",H(r.height))}}},K=Math.sin,tt=Math.cos,nt=Math.acos,et=Math.asin,rt=Math.tan,it=Math.atan2,ut=Math.PI/180,ot=180/Math.PI,at=Math.sqrt,lt=function(){function t(){var e=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:1,r=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0,i=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:0,u=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:1,o=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]?arguments[4]:0,a=arguments.length&gt;5&amp;&amp;void 0!==arguments[5]?arguments[5]:0;n(this,t),this.m=[e,r,i,u,o,a],this.i=null,this.w=null,this.s=null}return r(t,[{key:"point",value:function(t,n){var e=this.m;return{x:e[0]*t+e[2]*n+e[4],y:e[1]*t+e[3]*n+e[5]}}},{key:"translateSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0;if(!t&amp;&amp;!n)return this;var e=this.m;return e[4]+=e[0]*t+e[2]*n,e[5]+=e[1]*t+e[3]*n,this.w=this.s=this.i=null,this}},{key:"rotateSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0;if(t%=360){var n=K(t*=ut),e=tt(t),r=this.m,i=r[0],u=r[1];r[0]=i*e+r[2]*n,r[1]=u*e+r[3]*n,r[2]=r[2]*e-i*n,r[3]=r[3]*e-u*n,this.w=this.s=this.i=null}return this}},{key:"scaleSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:1,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:1;if(1!==t||1!==n){var e=this.m;e[0]*=t,e[1]*=t,e[2]*=n,e[3]*=n,this.w=this.s=this.i=null}return this}},{key:"skewSelf",value:function(t,n){if(n%=360,(t%=360)||n){var e=this.m,r=e[0],i=e[1],u=e[2],o=e[3];t&amp;&amp;(t=rt(t*ut),e[2]+=r*t,e[3]+=i*t),n&amp;&amp;(n=rt(n*ut),e[0]+=u*n,e[1]+=o*n),this.w=this.s=this.i=null}return this}},{key:"resetSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:1,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0,e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:0,r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:1,i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]?arguments[4]:0,u=arguments.length&gt;5&amp;&amp;void 0!==arguments[5]?arguments[5]:0,o=this.m;return o[0]=t,o[1]=n,o[2]=e,o[3]=r,o[4]=i,o[5]=u,this.w=this.s=this.i=null,this}},{key:"recomposeSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:null,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:null,e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:null,r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:null,i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]?arguments[4]:null;return this.isIdentity||this.resetSelf(),t&amp;&amp;(t.x||t.y)&amp;&amp;this.translateSelf(t.x,t.y),n&amp;&amp;this.rotateSelf(n),e&amp;&amp;(e.x&amp;&amp;this.skewSelf(e.x,0),e.y&amp;&amp;this.skewSelf(0,e.y)),!r||1===r.x&amp;&amp;1===r.y||this.scaleSelf(r.x,r.y),i&amp;&amp;(i.x||i.y)&amp;&amp;this.translateSelf(i.x,i.y),this}},{key:"decompose",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0,e=this.m,r=e[0]*e[0]+e[1]*e[1],i=[[e[0],e[1]],[e[2],e[3]]],u=at(r);if(0===u)return{origin:{x:e[4],y:e[5]},translate:{x:t,y:n},scale:{x:0,y:0},skew:{x:0,y:0},rotate:0};i[0][0]/=u,i[0][1]/=u;var o=e[0]*e[3]-e[1]*e[2]&lt;0;o&amp;&amp;(u=-u);var a=i[0][0]*i[1][0]+i[0][1]*i[1][1];i[1][0]-=i[0][0]*a,i[1][1]-=i[0][1]*a;var l=at(i[1][0]*i[1][0]+i[1][1]*i[1][1]);if(0===l)return{origin:{x:e[4],y:e[5]},translate:{x:t,y:n},scale:{x:u,y:0},skew:{x:0,y:0},rotate:0};i[1][0]/=l,i[1][1]/=l,a/=l;var s=0;return i[1][1]&lt;0?(s=nt(i[1][1])*ot,i[0][1]&lt;0&amp;&amp;(s=360-s)):s=et(i[0][1])*ot,o&amp;&amp;(s=-s),a=it(a,at(i[0][0]*i[0][0]+i[0][1]*i[0][1]))*ot,o&amp;&amp;(a=-a),{origin:{x:e[4],y:e[5]},translate:{x:t,y:n},scale:{x:u,y:l},skew:{x:a,y:0},rotate:s}}},{key:"toString",value:function(){return null===this.s&amp;&amp;(this.s="matrix("+this.m.map(ft).join(" ")+")"),this.s}},{key:"determinant",get:function(){var t=this.m;return t[0]*t[3]-t[1]*t[2]}},{key:"isIdentity",get:function(){if(null===this.i){var t=this.m;this.i=1===t[0]&amp;&amp;0===t[1]&amp;&amp;0===t[2]&amp;&amp;1===t[3]&amp;&amp;0===t[4]&amp;&amp;0===t[5]}return this.i}}]),t}(),st=/\.0+$/;function ft(t){return Number.isInteger(t)?t:t.toFixed(14).replace(st,"")}Object.freeze({M:2,L:2,Z:0,H:1,V:1,C:6,Q:4,T:2,S:4,A:7});function ct(t,n,e){return t+(n-t)*e}function ht(t,n,e){var r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]&amp;&amp;arguments[3],i={x:ct(t.x,n.x,e),y:ct(t.y,n.y,e)};return r&amp;&amp;(i.a=vt(t,n)),i}function vt(t,n){return Math.atan2(n.y-t.y,n.x-t.x)}var dt={},yt=null;function gt(t){var n=function(){if(yt)return yt;var t=document.createElementNS("http://www.w3.org/2000/svg","svg");return t.style.position="absolute",t.style.opacity="0.01",t.style.zIndex="-9999",t.style.left="-9999px",t.style.width="1px",t.style.height="1px",yt={svg:t}}().svg,e=document.createElementNS(n.namespaceURI,"path");e.setAttributeNS(null,"d",t),e.setAttributeNS(null,"fill","none"),e.setAttributeNS(null,"stroke","none"),n.appendChild(e);var r=e.getTotalLength();return function(t){var n=e.getPointAtLength(r*t);return{x:n.x,y:n.y}}}function pt(t){return dt[t]?dt[t]:dt[t]=gt(t)}function mt(t,n,e,r){if(!t||!r)return!1;var i=["M",t.x,t.y];if(n&amp;&amp;e&amp;&amp;(i.push("C"),i.push(n.x),i.push(n.y),i.push(e.x),i.push(e.y)),n?!e:e){var u=n||e;i.push("Q"),i.push(u.x),i.push(u.y)}return n||e||i.push("L"),i.push(r.x),i.push(r.y),i.join(" ")}function bt(t,n,e,r){var i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]?arguments[4]:1,u=mt(t,n,e,r),o=pt(u);try{return o(i)}catch(t){return null}}function wt(t,n,e,r){var i=1-r;return i*i*t+2*i*r*n+r*r*e}function xt(t,n,e,r){return 2*(1-r)*(n-t)+2*r*(e-n)}function At(t,n,e,r){var i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]&amp;&amp;arguments[4],u=bt(t,n,null,e,r);return u||(u={x:wt(t.x,n.x,e.x,r),y:wt(t.y,n.y,e.y,r)}),i&amp;&amp;(u.a=kt(t,n,e,r)),u}function kt(t,n,e,r){return Math.atan2(xt(t.y,n.y,e.y,r),xt(t.x,n.x,e.x,r))}function _t(t,n,e,r,i){var u=i*i;return i*u*(r-t+3*(n-e))+3*u*(t+e-2*n)+3*i*(n-t)+t}function St(t,n,e,r,i){var u=1-i;return 3*(u*u*(n-t)+2*u*i*(e-n)+i*i*(r-e))}function Mt(t,n,e,r,i){var u=arguments.length&gt;5&amp;&amp;void 0!==arguments[5]&amp;&amp;arguments[5],o=bt(t,n,e,r,i);return o||(o={x:_t(t.x,n.x,e.x,r.x,i),y:_t(t.y,n.y,e.y,r.y,i)}),u&amp;&amp;(o.a=Et(t,n,e,r,i)),o}function Et(t,n,e,r,i){return Math.atan2(St(t.y,n.y,e.y,r.y,i),St(t.x,n.x,e.x,r.x,i))}function Ot(t,n,e){var r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]&amp;&amp;arguments[3];if(It(n)){if(jt(e))return At(n,e.start,e,t,r)}else if(It(e)){if(n.end)return At(n,n.end,e,t,r)}else{if(n.end)return e.start?Mt(n,n.end,e.start,e,t,r):At(n,n.end,e,t,r);if(e.start)return At(n,e.start,e,t,r)}return ht(n,e,t,r)}function Bt(t,n,e){var r=Ot(t,n,e,!0);return r.a=function(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]&amp;&amp;arguments[1];return n?t+Math.PI:t}(r.a)/p,r}function It(t){return!t.type||"corner"===t.type}function jt(t){return null!=t.start&amp;&amp;!It(t)}var Pt=new lt;var Ft={f:function(t){return t?t.join(" "):""},i:function(n,e,r){if(0===n)return e;if(1===n)return r;var i=e.length;if(i!==r.length)return m(n,e,r);for(var u,o=new Array(i),a=0;a&lt;i;a++){if((u=t(e[a]))!==t(r[a]))return m(n,e,r);if("number"===u)o[a]=b(n,e[a],r[a]);else{if(e[a]!==r[a])return m(n,e,r);o[a]=e[a]}}return o}},Rt={f:null,i:M,u:function(t,n){return function(e){var r=n(e);t.setAttribute("x1",H(r[0])),t.setAttribute("y1",H(r[1])),t.setAttribute("x2",H(r[2])),t.setAttribute("y2",H(r[3]))}}},Tt={f:H,i:b},Ct={f:H,i:function(t,n,e){var r=b(t,n,e);return r&lt;=0?0:r&gt;=1?1:r}},Nt={f:function(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:" ";return t&amp;&amp;t.length&gt;0&amp;&amp;(t=t.map((function(t){return Math.floor(1e4*t)/1e4}))),Q(t,n)},i:function(t,n,e){var r,i,u,o=n.length,a=e.length;if(o!==a)if(0===o)n=E(o=a,0);else if(0===a)a=o,e=E(o,0);else{var l=(u=(r=o)*(i=a)/function(t,n){for(var e;n;)e=n,n=t%n,t=e;return t||1}(r,i))&lt;0?-u:u;n=O(n,Math.floor(l/o)),e=O(e,Math.floor(l/a)),o=a=l}for(var s=[],f=0;f&lt;o;f++)s.push(g(w(t,n[f],e[f]),6));return s}};function qt(t,n,e,r,i,u,o,a){return n=function(t,n,e){for(var r,i,u,o=t.length-1,a={},l=0;l&lt;=o;l++)(r=t[l]).e&amp;&amp;(r.e=n(r.e)),r.v&amp;&amp;"g"===(i=r.v).t&amp;&amp;i.r&amp;&amp;(u=e.getElementById(i.r))&amp;&amp;(a[i.r]=u.querySelectorAll("stop"));return a}(t,r,a),function(r){var i,u=e(r,t,Vt);return u?"c"===u.t?$(u.v):"g"===u.t?(n[u.r]&amp;&amp;function(t,n){for(var e=0,r=t.length;e&lt;r;e++)t[e].setAttribute("stop-color",$(n[e]))}(n[u.r],u.v),(i=u.r)?"url(#"+i+")":"none"):"none":"none"}}function Vt(t,n,e){if(0===t)return n;if(1===t)return e;if(n&amp;&amp;e){var r=n.t;if(r===e.t)switch(n.t){case"c":return{t:r,v:_(t,n.v,e.v)};case"g":if(n.r===e.r)return{t:r,v:S(t,n.v,e.v),r:n.r}}}return m(t,n,e)}var Lt={blur:A,brightness:w,contrast:w,"drop-shadow":function(t,n,e){return 0===t?n:1===t?e:{blur:A(t,n.blur,e.blur),offset:x(t,n.offset,e.offset),color:_(t,n.color,e.color)}},grayscale:w,"hue-rotate":b,invert:w,opacity:w,saturate:w,sepia:w};function zt(t,n,e){if(0===t)return n;if(1===t)return e;var r=n.length;if(r!==e.length)return m(t,n,e);for(var i,u=[],o=0;o&lt;r;o++){if(n[o].type!==e[o].type)return n;if(!(i=Lt[n[o].type]))return m(t,n,e);u.push({type:n.type,value:i(t,n[o].value,e[o].value)})}return u}var Dt={blur:function(t){return t?function(n){t.setAttribute("stdDeviation",X(n))}:null},brightness:function(t,n,e){return(t=Wt(e,n))?function(n){n=H(n),t.map((function(t){return t.setAttribute("slope",n)}))}:null},contrast:function(t,n,e){return(t=Wt(e,n))?function(n){var e=H((1-n)/2);n=H(n),t.map((function(t){t.setAttribute("slope",n),t.setAttribute("intercept",e)}))}:null},"drop-shadow":function(t,n,e){var r=e.getElementById(n+"-blur");if(!r)return null;var i=e.getElementById(n+"-offset");if(!i)return null;var u=e.getElementById(n+"-flood");return u?function(t){r.setAttribute("stdDeviation",X(t.blur)),i.setAttribute("dx",H(t.offset.x)),i.setAttribute("dy",H(t.offset.y)),u.setAttribute("flood-color",$(t.color))}:null},grayscale:function(t){return t?function(n){t.setAttribute("values",Q(function(t){return[.2126+.7874*(t=1-t),.7152-.7152*t,.0722-.0722*t,0,0,.2126-.2126*t,.7152+.2848*t,.0722-.0722*t,0,0,.2126-.2126*t,.7152-.7152*t,.0722+.9278*t,0,0,0,0,0,1,0]}(n)))}:null},"hue-rotate":function(t){return t?function(n){return t.setAttribute("values",H(n))}:null},invert:function(t,n,e){return(t=Wt(e,n))?function(n){n=H(n)+" "+H(1-n),t.map((function(t){return t.setAttribute("tableValues",n)}))}:null},opacity:function(t,n,e){return(t=e.getElementById(n+"-A"))?function(n){return t.setAttribute("tableValues","0 "+H(n))}:null},saturate:function(t){return t?function(n){return t.setAttribute("values",H(n))}:null},sepia:function(t){return t?function(n){return t.setAttribute("values",Q(function(t){return[.393+.607*(t=1-t),.769-.769*t,.189-.189*t,0,0,.349-.349*t,.686+.314*t,.168-.168*t,0,0,.272-.272*t,.534-.534*t,.131+.869*t,0,0,0,0,0,1,0]}(n)))}:null}};var Ut=["R","G","B"];function Wt(t,n){var e=Ut.map((function(e){return t.getElementById(n+"-"+e)||null}));return-1!==e.indexOf(null)?null:e}var Yt={fill:qt,"fill-opacity":Ct,stroke:qt,"stroke-opacity":Ct,"stroke-width":Tt,"stroke-dashoffset":{f:H,i:b},"stroke-dasharray":Nt,opacity:Ct,transform:function(n,e,r,i){if(!(n=function(n,e){if(!n||"object"!==t(n))return null;var r=!1;for(var i in n)n.hasOwnProperty(i)&amp;&amp;(n[i]&amp;&amp;n[i].length?(n[i].forEach((function(t){t.e&amp;&amp;(t.e=e(t.e))})),r=!0):delete n[i]);return r?n:null}(n,i)))return null;var u=function(t,i,u){var o=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:null;return n[t]?r(i,n[t],u):e&amp;&amp;e[t]?e[t]:o};return e&amp;&amp;e.a&amp;&amp;n.o?function(t){var e=r(t,n.o,Bt);return Pt.recomposeSelf(e,u("r",t,b,0)+e.a,u("k",t,x),u("s",t,x),u("t",t,x)).toString()}:function(t){return Pt.recomposeSelf(u("o",t,Ot,null),u("r",t,b,0),u("k",t,x),u("s",t,x),u("t",t,x)).toString()}},"#filter":function(t,n,e,r,i,u,o,a){if(!n.items||!t||!t.length)return null;var l=function(t,n){var e=(t=t.map((function(t){return t&amp;&amp;Dt[t[0]]?(n.getElementById(t[1]),Dt[t[0]](n.getElementById(t[1]),t[1],n)):null}))).length;return function(n){for(var r=0;r&lt;e;r++)t[r]&amp;&amp;t[r](n[r].value)}}(n.items,a);return l?(t=function(t,n){return t.map((function(t){return t.e=n(t.e),t}))}(t,r),function(n){l(e(n,t,zt))}):null},"#line":Rt,points:{f:Q,i:M},d:Ft,r:Tt,"#size":J,"#radius":Z,_:function(t,n){if(Array.isArray(t))for(var e=0;e&lt;t.length;e++)this[t[e]]=n;else this[t]=n}};return function(t){!function(t,n){if("function"!=typeof n&amp;&amp;null!==n)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(n&amp;&amp;n.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),n&amp;&amp;u(t,n)}(o,t);var e=a(o);function o(){return n(this,o),e.apply(this,arguments)}return r(o,null,[{key:"build",value:function(t){var n=l(i(o),"build",this).call(this,t,Yt),e=n.el,r=n.options,u=n.player;return function(t,n,e){if("click"===e.start){return void n.addEventListener("click",(function(){switch(e.click){case"freeze":return!t._running&amp;&amp;t.reachedToEnd()&amp;&amp;(t.offset=0),t._running?t.pause():t.play();case"restart":return t.offset&gt;0?t.restart():t.play();case"reverse":var n=!t._rollingBack&amp;&amp;t._running,r=t.reachedToEnd();return n||r&amp;&amp;1===t.fill?(t.pause(),r&amp;&amp;(t.offset=t.duration-1),t._rollback()):r?t.restart():t.play();case"none":default:return!t._running&amp;&amp;t.offset?t.restart():t.play()}}))}if("hover"===e.start)return n.addEventListener("mouseenter",(function(){return t.reachedToEnd()?t.restart():t.play()})),void n.addEventListener("mouseleave",(function(){switch(e.hover){case"freeze":return t.pause();case"reset":return t.stop();case"reverse":return t.pause(),t._rollback();case"none":default:return}}));if("scroll"===e.start)return void new Y(n,e.scroll||25,(function(n){n?t.reachedToEnd()?t.restart():t.play():t.pause()}));t.play()}(u,e,r),u}}]),o}(U)}));
+__SVGATOR_PLAYER__.build({"root":"eogh8uzg9wng1","animations":[{"duration":1300,"direction":1,"iterations":1,"fill":1,"alternate":false,"elements":{"eogh8uzg9wng7":{"transform":{"data":{"o":{"x":255.640625,"y":76.763671875,"type":"corner"},"t":{"x":-255.640625,"y":-76.763671875}},"keys":{"s":[{"t":0,"v":{"x":1,"y":1}},{"t":300,"v":{"x":1.2,"y":1.2}},{"t":700,"v":{"x":-1.2,"y":1.2}},{"t":1000,"v":{"x":-1,"y":1}}]}}},"eogh8uzg9wng8":{"transform":{"data":{"o":{"x":425.275390625,"y":147.38671875,"type":"corner"},"t":{"x":-425.275390625,"y":-147.38671875}},"keys":{"s":[{"t":0,"v":{"x":1,"y":1}},{"t":300,"v":{"x":1.2,"y":1.2}},{"t":700,"v":{"x":-1.2,"y":1.2}},{"t":1000,"v":{"x":-1,"y":1}}]}}},"eogh8uzg9wng9":{"transform":{"data":{"o":{"x":85.275390625,"y":147.38671875,"type":"corner"},"t":{"x":-85.275390625,"y":-147.38671875}},"keys":{"s":[{"t":0,"v":{"x":1,"y":1}},{"t":300,"v":{"x":1.2,"y":1.2}},{"t":700,"v":{"x":-1.2,"y":1.2}},{"t":1000,"v":{"x":-1,"y":1}}]}}}}}],"options":{"start":"hover","hover":"none","click":"freeze","scroll":25,"exportedIds":"unique","title":"Happy-clients"},"animationSettings":{"duration":1300,"direction":1,"iterations":1,"fill":1,"alternate":false}})});</script>
+													</svg>
+													<div class="mid-icons-fl">
+														<h6 style="color: #FE5B27;">400+</h6>
+														<p style="color: black">Happy Clients</p>
+													</div>
+												</div>
+												<div class="mid-icons set-incre-2">
+													<svg id="el489gw44clf1" xmlns="http://www.w3.org/2000/svg"
+														xmlns:xlink="http://www.w3.org/1999/xlink" viewbox="0 0 100 100"
+														shape-rendering="geometricPrecision"
+														text-rendering="geometricPrecision">
+														<path id="el489gw44clf2"
+															d="M20.500000,63.748000C31.333000,63.748000,42.167000,63.748000,53,63.748000C63.500000,63.748000,74,63.748000,84.500000,63.748000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10"></path>
+														<path id="el489gw44clf3"
+															d="M72.500000,59.748000C72.500000,47.748000,72.475000,35.748000,72.491000,23.748000C72.500000,17.257000,72.500000,17.257000,66,17.257000C56.834000,17.257000,47.667000,17.252000,38.500000,17.252000C31.513000,17.252000,31.500000,18.544000,31.500000,26.019000C48.565000,26.019000,67.264000,25.936000,84.960000,25.936000C84.960000,29.186000,84.939000,31.387000,84.960000,33.749000C85.053000,44.082000,85.019000,54.416000,84.992000,64.749000C84.979000,70.282000,85,71.743000,85,71.743000C67.666000,71.756000,43.333000,71.734000,26,71.694000C23.875000,71.689000,22.265000,71.694000,19.687000,71.694000C19.687000,56.777000,19.687000,40.994000,19.687000,26.019000C22.812000,26.019000,25.109000,26.019000,28.062000,26.019000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10"></path>
+														<path id="el489gw44clf4"
+															d="M30.500000,29.748000C28.321000,29.748000,26.142000,29.748000,23.500000,29.748000C23.500000,41.076000,23.500000,51.912000,23.500000,62.748000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10"></path>
+														<path id="el489gw44clf5"
+															d="M73.500000,29.748000C75.679000,29.748000,77.858000,29.748000,80.500000,29.748000C80.500000,41.076000,80.500000,51.912000,80.500000,62.748000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10"></path>
+														<path id="el489gw44clf6"
+															d="M31.478000,26.125000C31.478000,34.375000,31.513000,41.394000,31.513000,49.248000C31.513000,53.748000,31.500000,58.248000,31.500000,62.748000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10"></path>
+														<path id="el489gw44clf7"
+															d="M44,72.748000C42.896000,75.878000,41.791000,79.008000,40.470000,82.748000C49.326000,82.748000,54.515000,82.748000,63,82.748000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10"></path>
+														<path id="el489gw44clf8"
+															d="M60,72.748000C61,75.915000,62.188000,79.581000,63.188000,82.748000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10"></path>
+														<path id="el489gw44clf9"
+															d="M68,58.498000C65,58.498000,62,58.498000,59,58.498000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10" stroke-dasharray="9"
+															stroke-dashoffset="0"></path>
+														<path id="el489gw44clf10"
+															d="M68,53.748000C65,53.748000,62,53.748000,59,53.748000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10" stroke-dasharray="9"
+															stroke-dashoffset="0"></path>
+														<path id="el489gw44clf11"
+															d="M68,29.748000C65,29.748000,62,29.748000,59,29.748000"
+															transform="matrix(1 0 0 1 0 2)" clip-rule="evenodd"
+															fill="none" fill-rule="evenodd" stroke="rgb(255,70,0)"
+															stroke-width="2" stroke-linecap="round"
+															stroke-linejoin="round" stroke-miterlimit="10"
+															stroke-dasharray="9" stroke-dashoffset="0"></path>
+														<path id="el489gw44clf12"
+															d="M68,33.748000C65,33.748000,62,33.748000,59,33.748000"
+															transform="matrix(1 0 0 1 0 2)" clip-rule="evenodd"
+															fill="none" fill-rule="evenodd" stroke="rgb(255,70,0)"
+															stroke-width="2" stroke-linecap="round"
+															stroke-linejoin="round" stroke-miterlimit="10"
+															stroke-dasharray="9" stroke-dashoffset="0"></path>
+														<path id="el489gw44clf13"
+															d="M64,37.748000C62.334000,37.748000,60.666000,37.748000,59,37.748000"
+															transform="matrix(1 0 0 1 0 2)" clip-rule="evenodd"
+															fill="none" fill-rule="evenodd" stroke="rgb(255,70,0)"
+															stroke-width="2" stroke-linecap="round"
+															stroke-linejoin="round" stroke-miterlimit="10"
+															stroke-dasharray="5" stroke-dashoffset="0"></path>
+														<path id="el489gw44clf14"
+															d="M34.811000,53.748000C34.811000,55.404000,34.811000,56.123000,34.811000,58.498000C41.824000,58.498000,47.662000,58.498000,53.750000,58.498000C53.750000,57.257000,53.750000,55.754000,53.750000,53.748000C48.510000,53.748000,40.316000,53.748000,34.811000,53.748000"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10"></path>
+														<circle id="el489gw44clf15" r="9.625000"
+															transform="matrix(1 0 0 1 44.39000000000000 40.24800000000000)"
+															clip-rule="evenodd" fill="none" fill-rule="evenodd"
+															stroke="rgb(255,70,0)" stroke-width="2"
+															stroke-linecap="round" stroke-linejoin="round"
+															stroke-miterlimit="10" stroke-dasharray="60.480000"
+															opacity="1" stroke-dashoffset="2.570400"></circle>
+														<polyline id="el489gw44clf16"
+															points="39.625000,38.998000 42.625000,41.748000 49.250000,35.498000"
+															transform="matrix(1 0 0 1 0 2)" clip-rule="evenodd"
+															fill="none" fill-rule="evenodd" stroke="rgb(255,70,0)"
+															stroke-width="2" stroke-linecap="round"
+															stroke-linejoin="round" stroke-miterlimit="10"
+															stroke-dasharray="13.180000" opacity="1"
+															stroke-dashoffset="0"></polyline>
+														<script
+															type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {!function(t,n){"object"==typeof exports&amp;&amp;"undefined"!=typeof module?module.exports=n():"function"==typeof define&amp;&amp;define.amd?define(n):(t=t||self).__SVGATOR_PLAYER__=n()}(this,(function(){"use strict";function t(n){return(t="function"==typeof Symbol&amp;&amp;"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&amp;&amp;"function"==typeof Symbol&amp;&amp;t.constructor===Symbol&amp;&amp;t!==Symbol.prototype?"symbol":typeof t})(n)}function n(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}function e(t,n){for(var e=0;e&lt;n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&amp;&amp;(r.writable=!0),Object.defineProperty(t,r.key,r)}}function r(t,n,r){return n&amp;&amp;e(t.prototype,n),r&amp;&amp;e(t,r),t}function i(t){return(i=Object.setPrototypeOf?Object.getPrototypeOf:function(t){return t.__proto__||Object.getPrototypeOf(t)})(t)}function u(t,n){return(u=Object.setPrototypeOf||function(t,n){return t.__proto__=n,t})(t,n)}function o(t,n){return!n||"object"!=typeof n&amp;&amp;"function"!=typeof n?function(t){if(void 0===t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return t}(t):n}function a(t){var n=function(){if("undefined"==typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"==typeof Proxy)return!0;try{return Date.prototype.toString.call(Reflect.construct(Date,[],(function(){}))),!0}catch(t){return!1}}();return function(){var e,r=i(t);if(n){var u=i(this).constructor;e=Reflect.construct(r,arguments,u)}else e=r.apply(this,arguments);return o(this,e)}}function l(t,n,e){return(l="undefined"!=typeof Reflect&amp;&amp;Reflect.get?Reflect.get:function(t,n,e){var r=function(t,n){for(;!Object.prototype.hasOwnProperty.call(t,n)&amp;&amp;null!==(t=i(t)););return t}(t,n);if(r){var u=Object.getOwnPropertyDescriptor(r,n);return u.get?u.get.call(e):u.value}})(t,n,e||t)}var s=Math.abs;function f(t){return t}function c(t,n,e){var r=1-e;return 3*e*r*(t*r+n*e)+e*e*e}function h(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0,e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:1,r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:1;return t&lt;0||t&gt;1||e&lt;0||e&gt;1?null:s(t-n)&lt;=1e-5&amp;&amp;s(e-r)&lt;=1e-5?f:function(i){if(i&lt;=0)return t&gt;0?i*n/t:0===n&amp;&amp;e&gt;0?i*r/e:0;if(i&gt;=1)return e&lt;1?1+(i-1)*(r-1)/(e-1):1===e&amp;&amp;t&lt;1?1+(i-1)*(n-1)/(t-1):1;for(var u,o=0,a=1;o&lt;a;){var l=c(t,e,u=(o+a)/2);if(s(i-l)&lt;1e-5)break;l&lt;i?o=u:a=u}return c(n,r,u)}}function v(){return 1}function d(t){return 1===t?1:0}function y(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:1,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0;if(1===t){if(0===n)return d;if(1===n)return v}var e=1/t;return function(t){return t&gt;=1?1:(t+=n*e)-t%e}}function g(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:2;if(Number.isInteger(t))return t;var e=Math.pow(10,n);return Math.round(t*e)/e}var p=Math.PI/180;function m(t,n,e){return t&gt;=.5?e:n}function b(t,n,e){return 0===t||n===e?n:t*(e-n)+n}function w(t,n,e){var r=b(t,n,e);return r&lt;=0?0:r}function x(t,n,e){return 0===t?n:1===t?e:{x:b(t,n.x,e.x),y:b(t,n.y,e.y)}}function A(t,n,e){return 0===t?n:1===t?e:{x:w(t,n.x,e.x),y:w(t,n.y,e.y)}}function k(t,n,e){var r=function(t,n,e){return Math.round(b(t,n,e))}(t,n,e);return r&lt;=0?0:r&gt;=255?255:r}function _(t,n,e){return 0===t?n:1===t?e:{r:k(t,n.r,e.r),g:k(t,n.g,e.g),b:k(t,n.b,e.b),a:b(t,null==n.a?1:n.a,null==e.a?1:e.a)}}function S(t,n,e){if(0===t)return n;if(1===t)return e;var r=n.length;if(r!==e.length)return m(t,n,e);for(var i=[],u=0;u&lt;r;u++)i.push(_(t,n[u],e[u]));return i}function M(t,n,e){var r=n.length;if(r!==e.length)return m(t,n,e);for(var i=new Array(r),u=0;u&lt;r;u++)i[u]=b(t,n[u],e[u]);return i}function E(t,n){for(var e=[],r=0;r&lt;t;r++)e.push(n);return e}function O(t,n){if(--n&lt;=0)return t;var e=(t=Object.assign([],t)).length;do{for(var r=0;r&lt;e;r++)t.push(t[r])}while(--n&gt;0);return t}var B,I=function(){function t(e){n(this,t),this.list=e,this.length=e.length}return r(t,[{key:"setAttribute",value:function(t,n){for(var e=this.list,r=0;r&lt;this.length;r++)e[r].setAttribute(t,n)}},{key:"removeAttribute",value:function(t){for(var n=this.list,e=0;e&lt;this.length;e++)n[e].removeAttribute(t)}},{key:"style",value:function(t,n){for(var e=this.list,r=0;r&lt;this.length;r++)e[r].style[t]=n}}]),t}(),j=/-./g,P=function(t,n){return n.toUpperCase()};function F(t){return"function"==typeof t?t:m}function R(t){return t?"function"==typeof t?t:Array.isArray(t)?function(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:f;if(!Array.isArray(t))return n;switch(t.length){case 1:return y(t[0])||n;case 2:return y(t[0],t[1])||n;case 4:return h(t[0],t[1],t[2],t[3])||n}return n}(t,null):function(t,n){var e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:f;switch(t){case"linear":return f;case"steps":return y(n.steps||1,n.jump||0)||e;case"bezier":case"cubic-bezier":return h(n.x1||0,n.y1||0,n.x2||0,n.y2||0)||e}return e}(t.type,t.value,null):null}function T(t,n,e){var r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]&amp;&amp;arguments[3],i=n.length-1;if(t&lt;=n[0].t)return r?[0,0,n[0].v]:n[0].v;if(t&gt;=n[i].t)return r?[i,1,n[i].v]:n[i].v;var u,o=n[0],a=null;for(u=1;u&lt;=i;u++){if(!(t&gt;n[u].t)){a=n[u];break}o=n[u]}return null==a?r?[i,1,n[i].v]:n[i].v:o.t===a.t?r?[u,1,a.v]:a.v:(t=(t-o.t)/(a.t-o.t),o.e&amp;&amp;(t=o.e(t)),r?[u,t,e(t,o.v,a.v)]:e(t,o.v,a.v))}function C(t,n){var e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:null;return t&amp;&amp;t.length?"function"!=typeof n?null:("function"!=typeof e&amp;&amp;(e=null),function(r){var i=T(r,t,n);return null!=i&amp;&amp;e&amp;&amp;(i=e(i)),i}):null}function N(t,n){return t.t-n.t}function q(n,e,r,i,u){var o,a="@"===r[0],l="#"===r[0],s=B[r],f=m;switch(a?(o=r.substr(1),r=o.replace(j,P)):l&amp;&amp;(r=r.substr(1)),t(s)){case"function":if(f=s(i,u,T,R,r,a,e,n),l)return f;break;case"string":f=C(i,F(s));break;case"object":if((f=C(i,F(s.i),s.f))&amp;&amp;"function"==typeof s.u)return s.u(e,f,r,a,n)}return f?function(t,n,e){var r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]&amp;&amp;arguments[3];if(r)return t instanceof I?function(r){return t.style(n,e(r))}:function(r){return t.style[n]=e(r)};if(Array.isArray(n)){var i=n.length;return function(r){var u=e(r);if(null==u)for(var o=0;o&lt;i;o++)t[o].removeAttribute(n);else for(var a=0;a&lt;i;a++)t[a].setAttribute(n,u)}}return function(r){var i=e(r);null==i?t.removeAttribute(n):t.setAttribute(n,i)}}(e,r,f,a):null}function V(n,e,r,i){if(!i||"object"!==t(i))return null;var u=null,o=null;return Array.isArray(i)?o=function(t){if(!t||!t.length)return null;for(var n=0;n&lt;t.length;n++)t[n].e&amp;&amp;(t[n].e=R(t[n].e));return t.sort(N)}(i):(o=i.keys,u=i.data||null),o?q(n,e,r,o,u):null}function L(t,n,e){if(!e)return null;var r=[];for(var i in e)if(e.hasOwnProperty(i)){var u=V(t,n,i,e[i]);u&amp;&amp;r.push(u)}return r.length?r:null}function z(t,n){if(!n.duration||n.duration&lt;0)return null;var e=function(t,n){if(!n)return null;var e=[];if(Array.isArray(n))for(var r=n.length,i=0;i&lt;r;i++){var u=n[i];if(2===u.length){var o=null;if("string"==typeof u[0])o=t.getElementById(u[0]);else if(Array.isArray(u[0])){o=[];for(var a=0;a&lt;u[0].length;a++)if("string"==typeof u[0][a]){var l=t.getElementById(u[0][a]);l&amp;&amp;o.push(l)}o=o.length?1===o.length?o[0]:new I(o):null}if(o){var s=L(t,o,u[1]);s&amp;&amp;(e=e.concat(s))}}}else for(var f in n)if(n.hasOwnProperty(f)){var c=t.getElementById(f);if(c){var h=L(t,c,n[f]);h&amp;&amp;(e=e.concat(h))}}return e.length?e:null}(t,n.elements);return e?function(t,n){var e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:1/0,r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:1,i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]&amp;&amp;arguments[4],u=arguments.length&gt;5&amp;&amp;void 0!==arguments[5]?arguments[5]:1,o=t.length,a=r&gt;0?n:0;i&amp;&amp;e%2==0&amp;&amp;(a=n-a);var l=null;return function(s,f){var c=s%n,h=1+(s-c)/n;f*=r,i&amp;&amp;h%2==0&amp;&amp;(f=-f);var v=!1;if(h&gt;e)c=a,v=!0,-1===u&amp;&amp;(c=r&gt;0?0:n);else if(f&lt;0&amp;&amp;(c=n-c),c===l)return!1;l=c;for(var d=0;d&lt;o;d++)t[d](c);return v}}(e,n.duration,n.iterations||1/0,n.direction||1,!!n.alternate,n.fill||1):null}function D(t,n){if(B=n,!t||!t.root||!Array.isArray(t.animations))return null;for(var e=document.getElementsByTagName("svg"),r=!1,i=0;i&lt;e.length;i++)if(e[i].id===t.root&amp;&amp;!e[i].svgatorAnimation){(r=e[i]).svgatorAnimation=!0;break}if(!r)return null;var u=t.animations.map((function(t){return z(r,t)})).filter((function(t){return!!t}));return u.length?{element:r,animations:u,animationSettings:t.animationSettings,options:t.options||void 0}:null}var U=function(){function t(e,r){var i=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:{};n(this,t),this._id=0,this._running=!1,this._rollingBack=!1,this._animations=e,this.duration=r.duration,this.alternate=r.alternate,this.fill=r.fill,this.iterations=r.iterations,this.direction=i.direction||1,this.speed=i.speed||1,this.fps=i.fps||100,this.offset=i.offset||0,this.rollbackStartOffset=0}return r(t,[{key:"_rollback",value:function(){var t=this,n=1/0,e=null;this.rollbackStartOffset=this.offset,this._rollingBack||(this._rollingBack=!0,this._running=!0);this._id=window.requestAnimationFrame((function r(i){if(t._rollingBack){null==e&amp;&amp;(e=i);var u=i-e,o=t.rollbackStartOffset-u,a=Math.round(o*t.speed);if(a&gt;t.duration&amp;&amp;n!=1/0){var l=!!t.alternate&amp;&amp;a/t.duration%2&gt;1,s=a%t.duration;a=(s+=l?t.duration:0)||t.duration}var f=t.fps?1e3/t.fps:0,c=Math.max(0,a);if(c&lt;n-f){t.offset=c,n=c;for(var h=t._animations,v=h.length,d=0;d&lt;v;d++)h[d](c,t.direction)}var y=!1;if(t.iterations&gt;0&amp;&amp;-1===t.fill){var g=t.iterations*t.duration,p=g==a;a=p?0:a,t.offset=p?0:t.offset,y=a&gt;g}a&gt;0&amp;&amp;t.offset&gt;=a&amp;&amp;!y?t._id=window.requestAnimationFrame(r):t.stop()}}))}},{key:"_start",value:function(){var t=this,n=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0,e=-1/0,r=null,i={},u=function u(o){t._running=!0,null==r&amp;&amp;(r=o);var a=Math.round((o-r+n)*t.speed),l=t.fps?1e3/t.fps:0;if(a&gt;e+l&amp;&amp;!t._rollingBack){t.offset=a,e=a;for(var s=t._animations,f=s.length,c=0,h=0;h&lt;f;h++)i[h]?c++:(i[h]=s[h](a,t.direction),i[h]&amp;&amp;c++);if(c===f)return void t._stop()}t._id=window.requestAnimationFrame(u)};this._id=window.requestAnimationFrame(u)}},{key:"_stop",value:function(){this._id&amp;&amp;window.cancelAnimationFrame(this._id),this._running=!1,this._rollingBack=!1}},{key:"play",value:function(){!this._rollingBack&amp;&amp;this._running||(this._rollingBack=!1,this.rollbackStartOffset&gt;this.duration&amp;&amp;(this.offset=this.rollbackStartOffset-(this.rollbackStartOffset-this.offset)%this.duration,this.rollbackStartOffset=0),this._start(this.offset))}},{key:"stop",value:function(){this._stop(),this.offset=0,this.rollbackStartOffset=0;var t=this.direction,n=this._animations;window.requestAnimationFrame((function(){for(var e=0;e&lt;n.length;e++)n[e](0,t)}))}},{key:"reachedToEnd",value:function(){return this.iterations&gt;0&amp;&amp;this.offset&gt;=this.iterations*this.duration}},{key:"restart",value:function(){this._stop(),this.offset=0,this._start()}},{key:"pause",value:function(){this._stop()}},{key:"reverse",value:function(){this.direction=-this.direction}}],[{key:"build",value:function(n,e){return(n=D(n,e))?{el:n.element,options:n.options||{},player:new t(n.animations,n.animationSettings,n.options)}:null}}]),t}();!function(){for(var t=0,n=["ms","moz","webkit","o"],e=0;e&lt;n.length&amp;&amp;!window.requestAnimationFrame;++e)window.requestAnimationFrame=window[n[e]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[n[e]+"CancelAnimationFrame"]||window[n[e]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(n){var e=Date.now(),r=Math.max(0,16-(e-t)),i=window.setTimeout((function(){n(e+r)}),r);return t=e+r,i},window.cancelAnimationFrame=window.clearTimeout)}();var W=function(t,n){var e=!1,r=null;return function(i){e&amp;&amp;clearTimeout(e),e=setTimeout((function(){return function(){for(var i=0,u=window.innerHeight,o=0,a=window.innerWidth,l=t.parentNode;l instanceof Element;){var s=window.getComputedStyle(l);if("visible"!==s.overflowY||"visible"!==s.overflowX){var f=l.getBoundingClientRect();"visible"!==s.overflowY&amp;&amp;(i=Math.max(i,f.top),u=Math.min(u,f.bottom)),"visible"!==s.overflowX&amp;&amp;(o=Math.max(o,f.left),a=Math.min(a,f.right))}if(l===l.parentNode)break;l=l.parentNode}e=!1;var c=t.getBoundingClientRect(),h=Math.min(c.height,Math.max(0,i-c.top)),v=Math.min(c.height,Math.max(0,c.bottom-u)),d=Math.min(c.width,Math.max(0,o-c.left)),y=Math.min(c.width,Math.max(0,c.right-a)),g=(c.height-h-v)/c.height,p=(c.width-d-y)/c.width,m=Math.round(g*p*100);null!==r&amp;&amp;r===m||(r=m,n(m))}()}),100)}},Y=function(){function t(e,r,i){n(this,t),r=Math.max(1,r||1),r=Math.min(r,100),this.el=e,this.onTresholdChange=i&amp;&amp;i.call?i:function(){},this.tresholdPercent=r||1,this.currentVisibility=null,this.visibilityCalculator=W(e,this.onVisibilityUpdate.bind(this)),this.bindScrollWatchers(),this.visibilityCalculator()}return r(t,[{key:"bindScrollWatchers",value:function(){for(var t=this.el.parentNode;t&amp;&amp;(t.addEventListener("scroll",this.visibilityCalculator),t!==t.parentNode&amp;&amp;t!==document);)t=t.parentNode}},{key:"onVisibilityUpdate",value:function(t){var n=this.currentVisibility&gt;=this.tresholdPercent,e=t&gt;=this.tresholdPercent;if(null===this.currentVisibility||n!==e)return this.currentVisibility=t,void this.onTresholdChange(e);this.currentVisibility=t}}]),t}(),G=/\.0+$/g;function H(t){return Number.isInteger(t)?t+"":t.toFixed(6).replace(G,"")}function Q(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:" ";return t&amp;&amp;t.length?t.map(H).join(n):""}function X(t){return H(t.x)+","+H(t.y)}function $(t){return t?null==t.a||t.a&gt;=1?"rgb("+t.r+","+t.g+","+t.b+")":"rgba("+t.r+","+t.g+","+t.b+","+t.a+")":"transparent"}var Z={f:null,i:A,u:function(t,n){return function(e){var r=n(e);t.setAttribute("rx",H(r.x)),t.setAttribute("ry",H(r.y))}}},J={f:null,i:function(t,n,e){return 0===t?n:1===t?e:{width:w(t,n.width,e.width),height:w(t,n.height,e.height)}},u:function(t,n){return function(e){var r=n(e);t.setAttribute("width",H(r.width)),t.setAttribute("height",H(r.height))}}},K=Math.sin,tt=Math.cos,nt=Math.acos,et=Math.asin,rt=Math.tan,it=Math.atan2,ut=Math.PI/180,ot=180/Math.PI,at=Math.sqrt,lt=function(){function t(){var e=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:1,r=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0,i=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:0,u=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:1,o=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]?arguments[4]:0,a=arguments.length&gt;5&amp;&amp;void 0!==arguments[5]?arguments[5]:0;n(this,t),this.m=[e,r,i,u,o,a],this.i=null,this.w=null,this.s=null}return r(t,[{key:"point",value:function(t,n){var e=this.m;return{x:e[0]*t+e[2]*n+e[4],y:e[1]*t+e[3]*n+e[5]}}},{key:"translateSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0;if(!t&amp;&amp;!n)return this;var e=this.m;return e[4]+=e[0]*t+e[2]*n,e[5]+=e[1]*t+e[3]*n,this.w=this.s=this.i=null,this}},{key:"rotateSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0;if(t%=360){var n=K(t*=ut),e=tt(t),r=this.m,i=r[0],u=r[1];r[0]=i*e+r[2]*n,r[1]=u*e+r[3]*n,r[2]=r[2]*e-i*n,r[3]=r[3]*e-u*n,this.w=this.s=this.i=null}return this}},{key:"scaleSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:1,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:1;if(1!==t||1!==n){var e=this.m;e[0]*=t,e[1]*=t,e[2]*=n,e[3]*=n,this.w=this.s=this.i=null}return this}},{key:"skewSelf",value:function(t,n){if(n%=360,(t%=360)||n){var e=this.m,r=e[0],i=e[1],u=e[2],o=e[3];t&amp;&amp;(t=rt(t*ut),e[2]+=r*t,e[3]+=i*t),n&amp;&amp;(n=rt(n*ut),e[0]+=u*n,e[1]+=o*n),this.w=this.s=this.i=null}return this}},{key:"resetSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:1,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0,e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:0,r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:1,i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]?arguments[4]:0,u=arguments.length&gt;5&amp;&amp;void 0!==arguments[5]?arguments[5]:0,o=this.m;return o[0]=t,o[1]=n,o[2]=e,o[3]=r,o[4]=i,o[5]=u,this.w=this.s=this.i=null,this}},{key:"recomposeSelf",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:null,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:null,e=arguments.length&gt;2&amp;&amp;void 0!==arguments[2]?arguments[2]:null,r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:null,i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]?arguments[4]:null;return this.isIdentity||this.resetSelf(),t&amp;&amp;(t.x||t.y)&amp;&amp;this.translateSelf(t.x,t.y),n&amp;&amp;this.rotateSelf(n),e&amp;&amp;(e.x&amp;&amp;this.skewSelf(e.x,0),e.y&amp;&amp;this.skewSelf(0,e.y)),!r||1===r.x&amp;&amp;1===r.y||this.scaleSelf(r.x,r.y),i&amp;&amp;(i.x||i.y)&amp;&amp;this.translateSelf(i.x,i.y),this}},{key:"decompose",value:function(){var t=arguments.length&gt;0&amp;&amp;void 0!==arguments[0]?arguments[0]:0,n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:0,e=this.m,r=e[0]*e[0]+e[1]*e[1],i=[[e[0],e[1]],[e[2],e[3]]],u=at(r);if(0===u)return{origin:{x:e[4],y:e[5]},translate:{x:t,y:n},scale:{x:0,y:0},skew:{x:0,y:0},rotate:0};i[0][0]/=u,i[0][1]/=u;var o=e[0]*e[3]-e[1]*e[2]&lt;0;o&amp;&amp;(u=-u);var a=i[0][0]*i[1][0]+i[0][1]*i[1][1];i[1][0]-=i[0][0]*a,i[1][1]-=i[0][1]*a;var l=at(i[1][0]*i[1][0]+i[1][1]*i[1][1]);if(0===l)return{origin:{x:e[4],y:e[5]},translate:{x:t,y:n},scale:{x:u,y:0},skew:{x:0,y:0},rotate:0};i[1][0]/=l,i[1][1]/=l,a/=l;var s=0;return i[1][1]&lt;0?(s=nt(i[1][1])*ot,i[0][1]&lt;0&amp;&amp;(s=360-s)):s=et(i[0][1])*ot,o&amp;&amp;(s=-s),a=it(a,at(i[0][0]*i[0][0]+i[0][1]*i[0][1]))*ot,o&amp;&amp;(a=-a),{origin:{x:e[4],y:e[5]},translate:{x:t,y:n},scale:{x:u,y:l},skew:{x:a,y:0},rotate:s}}},{key:"toString",value:function(){return null===this.s&amp;&amp;(this.s="matrix("+this.m.map(ft).join(" ")+")"),this.s}},{key:"determinant",get:function(){var t=this.m;return t[0]*t[3]-t[1]*t[2]}},{key:"isIdentity",get:function(){if(null===this.i){var t=this.m;this.i=1===t[0]&amp;&amp;0===t[1]&amp;&amp;0===t[2]&amp;&amp;1===t[3]&amp;&amp;0===t[4]&amp;&amp;0===t[5]}return this.i}}]),t}(),st=/\.0+$/;function ft(t){return Number.isInteger(t)?t:t.toFixed(14).replace(st,"")}Object.freeze({M:2,L:2,Z:0,H:1,V:1,C:6,Q:4,T:2,S:4,A:7});function ct(t,n,e){return t+(n-t)*e}function ht(t,n,e){var r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]&amp;&amp;arguments[3],i={x:ct(t.x,n.x,e),y:ct(t.y,n.y,e)};return r&amp;&amp;(i.a=vt(t,n)),i}function vt(t,n){return Math.atan2(n.y-t.y,n.x-t.x)}var dt={},yt=null;function gt(t){var n=function(){if(yt)return yt;var t=document.createElementNS("http://www.w3.org/2000/svg","svg");return t.style.position="absolute",t.style.opacity="0.01",t.style.zIndex="-9999",t.style.left="-9999px",t.style.width="1px",t.style.height="1px",yt={svg:t}}().svg,e=document.createElementNS(n.namespaceURI,"path");e.setAttributeNS(null,"d",t),e.setAttributeNS(null,"fill","none"),e.setAttributeNS(null,"stroke","none"),n.appendChild(e);var r=e.getTotalLength();return function(t){var n=e.getPointAtLength(r*t);return{x:n.x,y:n.y}}}function pt(t){return dt[t]?dt[t]:dt[t]=gt(t)}function mt(t,n,e,r){if(!t||!r)return!1;var i=["M",t.x,t.y];if(n&amp;&amp;e&amp;&amp;(i.push("C"),i.push(n.x),i.push(n.y),i.push(e.x),i.push(e.y)),n?!e:e){var u=n||e;i.push("Q"),i.push(u.x),i.push(u.y)}return n||e||i.push("L"),i.push(r.x),i.push(r.y),i.join(" ")}function bt(t,n,e,r){var i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]?arguments[4]:1,u=mt(t,n,e,r),o=pt(u);try{return o(i)}catch(t){return null}}function wt(t,n,e,r){var i=1-r;return i*i*t+2*i*r*n+r*r*e}function xt(t,n,e,r){return 2*(1-r)*(n-t)+2*r*(e-n)}function At(t,n,e,r){var i=arguments.length&gt;4&amp;&amp;void 0!==arguments[4]&amp;&amp;arguments[4],u=bt(t,n,null,e,r);return u||(u={x:wt(t.x,n.x,e.x,r),y:wt(t.y,n.y,e.y,r)}),i&amp;&amp;(u.a=kt(t,n,e,r)),u}function kt(t,n,e,r){return Math.atan2(xt(t.y,n.y,e.y,r),xt(t.x,n.x,e.x,r))}function _t(t,n,e,r,i){var u=i*i;return i*u*(r-t+3*(n-e))+3*u*(t+e-2*n)+3*i*(n-t)+t}function St(t,n,e,r,i){var u=1-i;return 3*(u*u*(n-t)+2*u*i*(e-n)+i*i*(r-e))}function Mt(t,n,e,r,i){var u=arguments.length&gt;5&amp;&amp;void 0!==arguments[5]&amp;&amp;arguments[5],o=bt(t,n,e,r,i);return o||(o={x:_t(t.x,n.x,e.x,r.x,i),y:_t(t.y,n.y,e.y,r.y,i)}),u&amp;&amp;(o.a=Et(t,n,e,r,i)),o}function Et(t,n,e,r,i){return Math.atan2(St(t.y,n.y,e.y,r.y,i),St(t.x,n.x,e.x,r.x,i))}function Ot(t,n,e){var r=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]&amp;&amp;arguments[3];if(It(n)){if(jt(e))return At(n,e.start,e,t,r)}else if(It(e)){if(n.end)return At(n,n.end,e,t,r)}else{if(n.end)return e.start?Mt(n,n.end,e.start,e,t,r):At(n,n.end,e,t,r);if(e.start)return At(n,e.start,e,t,r)}return ht(n,e,t,r)}function Bt(t,n,e){var r=Ot(t,n,e,!0);return r.a=function(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]&amp;&amp;arguments[1];return n?t+Math.PI:t}(r.a)/p,r}function It(t){return!t.type||"corner"===t.type}function jt(t){return null!=t.start&amp;&amp;!It(t)}var Pt=new lt;var Ft={f:function(t){return t?t.join(" "):""},i:function(n,e,r){if(0===n)return e;if(1===n)return r;var i=e.length;if(i!==r.length)return m(n,e,r);for(var u,o=new Array(i),a=0;a&lt;i;a++){if((u=t(e[a]))!==t(r[a]))return m(n,e,r);if("number"===u)o[a]=b(n,e[a],r[a]);else{if(e[a]!==r[a])return m(n,e,r);o[a]=e[a]}}return o}},Rt={f:null,i:M,u:function(t,n){return function(e){var r=n(e);t.setAttribute("x1",H(r[0])),t.setAttribute("y1",H(r[1])),t.setAttribute("x2",H(r[2])),t.setAttribute("y2",H(r[3]))}}},Tt={f:H,i:b},Ct={f:H,i:function(t,n,e){var r=b(t,n,e);return r&lt;=0?0:r&gt;=1?1:r}},Nt={f:function(t){var n=arguments.length&gt;1&amp;&amp;void 0!==arguments[1]?arguments[1]:" ";return t&amp;&amp;t.length&gt;0&amp;&amp;(t=t.map((function(t){return Math.floor(1e4*t)/1e4}))),Q(t,n)},i:function(t,n,e){var r,i,u,o=n.length,a=e.length;if(o!==a)if(0===o)n=E(o=a,0);else if(0===a)a=o,e=E(o,0);else{var l=(u=(r=o)*(i=a)/function(t,n){for(var e;n;)e=n,n=t%n,t=e;return t||1}(r,i))&lt;0?-u:u;n=O(n,Math.floor(l/o)),e=O(e,Math.floor(l/a)),o=a=l}for(var s=[],f=0;f&lt;o;f++)s.push(g(w(t,n[f],e[f]),6));return s}};function qt(t,n,e,r,i,u,o,a){return n=function(t,n,e){for(var r,i,u,o=t.length-1,a={},l=0;l&lt;=o;l++)(r=t[l]).e&amp;&amp;(r.e=n(r.e)),r.v&amp;&amp;"g"===(i=r.v).t&amp;&amp;i.r&amp;&amp;(u=e.getElementById(i.r))&amp;&amp;(a[i.r]=u.querySelectorAll("stop"));return a}(t,r,a),function(r){var i,u=e(r,t,Vt);return u?"c"===u.t?$(u.v):"g"===u.t?(n[u.r]&amp;&amp;function(t,n){for(var e=0,r=t.length;e&lt;r;e++)t[e].setAttribute("stop-color",$(n[e]))}(n[u.r],u.v),(i=u.r)?"url(#"+i+")":"none"):"none":"none"}}function Vt(t,n,e){if(0===t)return n;if(1===t)return e;if(n&amp;&amp;e){var r=n.t;if(r===e.t)switch(n.t){case"c":return{t:r,v:_(t,n.v,e.v)};case"g":if(n.r===e.r)return{t:r,v:S(t,n.v,e.v),r:n.r}}}return m(t,n,e)}var Lt={blur:A,brightness:w,contrast:w,"drop-shadow":function(t,n,e){return 0===t?n:1===t?e:{blur:A(t,n.blur,e.blur),offset:x(t,n.offset,e.offset),color:_(t,n.color,e.color)}},grayscale:w,"hue-rotate":b,invert:w,opacity:w,saturate:w,sepia:w};function zt(t,n,e){if(0===t)return n;if(1===t)return e;var r=n.length;if(r!==e.length)return m(t,n,e);for(var i,u=[],o=0;o&lt;r;o++){if(n[o].type!==e[o].type)return n;if(!(i=Lt[n[o].type]))return m(t,n,e);u.push({type:n.type,value:i(t,n[o].value,e[o].value)})}return u}var Dt={blur:function(t){return t?function(n){t.setAttribute("stdDeviation",X(n))}:null},brightness:function(t,n,e){return(t=Wt(e,n))?function(n){n=H(n),t.map((function(t){return t.setAttribute("slope",n)}))}:null},contrast:function(t,n,e){return(t=Wt(e,n))?function(n){var e=H((1-n)/2);n=H(n),t.map((function(t){t.setAttribute("slope",n),t.setAttribute("intercept",e)}))}:null},"drop-shadow":function(t,n,e){var r=e.getElementById(n+"-blur");if(!r)return null;var i=e.getElementById(n+"-offset");if(!i)return null;var u=e.getElementById(n+"-flood");return u?function(t){r.setAttribute("stdDeviation",X(t.blur)),i.setAttribute("dx",H(t.offset.x)),i.setAttribute("dy",H(t.offset.y)),u.setAttribute("flood-color",$(t.color))}:null},grayscale:function(t){return t?function(n){t.setAttribute("values",Q(function(t){return[.2126+.7874*(t=1-t),.7152-.7152*t,.0722-.0722*t,0,0,.2126-.2126*t,.7152+.2848*t,.0722-.0722*t,0,0,.2126-.2126*t,.7152-.7152*t,.0722+.9278*t,0,0,0,0,0,1,0]}(n)))}:null},"hue-rotate":function(t){return t?function(n){return t.setAttribute("values",H(n))}:null},invert:function(t,n,e){return(t=Wt(e,n))?function(n){n=H(n)+" "+H(1-n),t.map((function(t){return t.setAttribute("tableValues",n)}))}:null},opacity:function(t,n,e){return(t=e.getElementById(n+"-A"))?function(n){return t.setAttribute("tableValues","0 "+H(n))}:null},saturate:function(t){return t?function(n){return t.setAttribute("values",H(n))}:null},sepia:function(t){return t?function(n){return t.setAttribute("values",Q(function(t){return[.393+.607*(t=1-t),.769-.769*t,.189-.189*t,0,0,.349-.349*t,.686+.314*t,.168-.168*t,0,0,.272-.272*t,.534-.534*t,.131+.869*t,0,0,0,0,0,1,0]}(n)))}:null}};var Ut=["R","G","B"];function Wt(t,n){var e=Ut.map((function(e){return t.getElementById(n+"-"+e)||null}));return-1!==e.indexOf(null)?null:e}var Yt={fill:qt,"fill-opacity":Ct,stroke:qt,"stroke-opacity":Ct,"stroke-width":Tt,"stroke-dashoffset":{f:H,i:b},"stroke-dasharray":Nt,opacity:Ct,transform:function(n,e,r,i){if(!(n=function(n,e){if(!n||"object"!==t(n))return null;var r=!1;for(var i in n)n.hasOwnProperty(i)&amp;&amp;(n[i]&amp;&amp;n[i].length?(n[i].forEach((function(t){t.e&amp;&amp;(t.e=e(t.e))})),r=!0):delete n[i]);return r?n:null}(n,i)))return null;var u=function(t,i,u){var o=arguments.length&gt;3&amp;&amp;void 0!==arguments[3]?arguments[3]:null;return n[t]?r(i,n[t],u):e&amp;&amp;e[t]?e[t]:o};return e&amp;&amp;e.a&amp;&amp;n.o?function(t){var e=r(t,n.o,Bt);return Pt.recomposeSelf(e,u("r",t,b,0)+e.a,u("k",t,x),u("s",t,x),u("t",t,x)).toString()}:function(t){return Pt.recomposeSelf(u("o",t,Ot,null),u("r",t,b,0),u("k",t,x),u("s",t,x),u("t",t,x)).toString()}},"#filter":function(t,n,e,r,i,u,o,a){if(!n.items||!t||!t.length)return null;var l=function(t,n){var e=(t=t.map((function(t){return t&amp;&amp;Dt[t[0]]?(n.getElementById(t[1]),Dt[t[0]](n.getElementById(t[1]),t[1],n)):null}))).length;return function(n){for(var r=0;r&lt;e;r++)t[r]&amp;&amp;t[r](n[r].value)}}(n.items,a);return l?(t=function(t,n){return t.map((function(t){return t.e=n(t.e),t}))}(t,r),function(n){l(e(n,t,zt))}):null},"#line":Rt,points:{f:Q,i:M},d:Ft,r:Tt,"#size":J,"#radius":Z,_:function(t,n){if(Array.isArray(t))for(var e=0;e&lt;t.length;e++)this[t[e]]=n;else this[t]=n}};return function(t){!function(t,n){if("function"!=typeof n&amp;&amp;null!==n)throw new TypeError("Super expression must either be null or a function");t.prototype=Object.create(n&amp;&amp;n.prototype,{constructor:{value:t,writable:!0,configurable:!0}}),n&amp;&amp;u(t,n)}(o,t);var e=a(o);function o(){return n(this,o),e.apply(this,arguments)}return r(o,null,[{key:"build",value:function(t){var n=l(i(o),"build",this).call(this,t,Yt),e=n.el,r=n.options,u=n.player;return function(t,n,e){if("click"===e.start){return void n.addEventListener("click",(function(){switch(e.click){case"freeze":return!t._running&amp;&amp;t.reachedToEnd()&amp;&amp;(t.offset=0),t._running?t.pause():t.play();case"restart":return t.offset&gt;0?t.restart():t.play();case"reverse":var n=!t._rollingBack&amp;&amp;t._running,r=t.reachedToEnd();return n||r&amp;&amp;1===t.fill?(t.pause(),r&amp;&amp;(t.offset=t.duration-1),t._rollback()):r?t.restart():t.play();case"none":default:return!t._running&amp;&amp;t.offset?t.restart():t.play()}}))}if("hover"===e.start)return n.addEventListener("mouseenter",(function(){return t.reachedToEnd()?t.restart():t.play()})),void n.addEventListener("mouseleave",(function(){switch(e.hover){case"freeze":return t.pause();case"reset":return t.stop();case"reverse":return t.pause(),t._rollback();case"none":default:return}}));if("scroll"===e.start)return void new Y(n,e.scroll||25,(function(n){n?t.reachedToEnd()?t.restart():t.play():t.pause()}));t.play()}(u,e,r),u}}]),o}(U)}));
+__SVGATOR_PLAYER__.build({"root":"el489gw44clf1","animations":[{"duration":2000,"direction":1,"iterations":1,"fill":1,"alternate":false,"elements":{"el489gw44clf9":{"stroke-dashoffset":[{"t":0,"v":0},{"t":300,"v":9},{"t":600,"v":0}]},"el489gw44clf10":{"stroke-dashoffset":[{"t":0,"v":0},{"t":300,"v":9},{"t":600,"v":0}]},"el489gw44clf11":{"stroke-dashoffset":[{"t":0,"v":0},{"t":300,"v":9},{"t":600,"v":0}]},"el489gw44clf12":{"stroke-dashoffset":[{"t":0,"v":0},{"t":300,"v":9},{"t":600,"v":0}]},"el489gw44clf13":{"stroke-dashoffset":[{"t":0,"v":0},{"t":300,"v":5},{"t":600,"v":0}]},"el489gw44clf15":{"opacity":[{"t":0,"v":1},{"t":100,"v":0},{"t":400,"v":1}],"stroke-dashoffset":[{"t":0,"v":0},{"t":100,"v":60.48},{"t":1000,"v":60.48},{"t":1400,"v":0}]},"el489gw44clf16":{"opacity":[{"t":0,"v":1},{"t":100,"v":0},{"t":400,"v":1}],"stroke-dashoffset":[{"t":0,"v":0},{"t":100,"v":13.18},{"t":600,"v":13.18},{"t":1000,"v":0}]}}}],"options":{"start":"hover","hover":"none","click":"freeze","scroll":25,"exportedIds":"unique","title":"Projects-Done"},"animationSettings":{"duration":2000,"direction":1,"iterations":1,"fill":1,"alternate":false}})});</script>
+													</svg>
+													<div class="mid-icons-fl">
+														<h6 style="color: #FE5B27;;">540+</h6>
+														<p style="color:black">Projects Completed</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="e-hero-right">
+									<div class="e-commerce-form">
+										<div class="e-commerce-form-top">
+											<h3>LET’S DISCUSS YOUR REQUIREMENTS</h3>
+											<p>We deliver IT solutions that grow your business.</p>
+										</div>
+										<div class="wpcf7 no-js" id="wpcf7-f11170-o1" lang="en-US" dir="ltr">
+											<div class="screen-reader-response">
+												<p role="status" aria-live="polite" aria-atomic="true"></p>
+												<ul></ul>
+											</div>
+											
+        <form action="https://formspree.io/f/xwkjzjok" method="POST" onsubmit="location.reload();">
+            <div class="form-group">
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Name *" required>
+                </div>
+                   <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="Email Address *" required>
+                </div>
+				<div class="form-group">
+					<input type="text" name="name" class="form-control" placeholder="Number: +91-9738874-XXX (🇮🇳)" required>
+				</div>
+				
+             
+            </div>
+            <div class="form-group">
+                <textarea name="message" placeholder="Type your message" class="form-control" rows="10" required></textarea>
+            </div>
+			<button type="submit" class="btn" style="background-color: #FE5B27; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Submit Your Requirements</button>
+
+        </form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+
+				<div class="partners-logo-section service-partners">
+					<div class="container">
+						<div class="row">
+							<div class="partners-carousel owl-carousel owl-theme owl-loaded owl-drag">
+								<div class="owl-stage-outer">
+									<div class="owl-stage">
+										<div class="owl-item">
+											<div class="item">
+												<div class="particular-logo">
+													<img alt="partners-logo-1" title="partners-logo-1"
+														src="https://technocratshorizons.com/wp-content/uploads/2022/07/walcraftcabinetry.png.webp" />
+												</div>
+											</div>
+										</div>
+										<div class="owl-item">
+											<div class="item">
+												<div class="particular-logo">
+													<img alt="partners-logo-2" title="partners-logo-2"
+														src="https://technocratshorizons.com/wp-content/uploads/2021/02/logo.png" />
+												</div>
+											</div>
+										</div>
+										<div class="owl-item">
+											<div class="item">
+												<div class="particular-logo">
+													<img alt="partners-logo-3" title="partners-logo-3"
+														src="https://technocratshorizons.com/wp-content/uploads/2021/02/png_transparent-os77hun8ypzet4lqakcsx55unglqgtfxqpxju1q1qy.png" />
+												</div>
+											</div>
+										</div>
+										<div class="owl-item">
+											<div class="item">
+												<div class="particular-logo">
+													<img alt="partners-logo-4" title="partners-logo-4"
+														src="https://technocratshorizons.com/wp-content/uploads/2021/02/cfl-logo.png" />
+												</div>
+											</div>
+										</div>
+										<div class="owl-item">
+											<div class="item">
+												<div class="particular-logo">
+													<img alt="partners-logo-5" title="partners-logo-5"
+														src="https://technocratshorizons.com/wp-content/uploads/2021/02/main-logo.png" />
+												</div>
+											</div>
+										</div>
+										<div class="owl-item">
+											<div class="item">
+												<div class="particular-logo">
+													<img alt="partners-logo-6" title="partners-logo-6"
+														src="https://technocratshorizons.com/wp-content/uploads/2021/02/logo-black.png" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="service-area-offer mb-5">
+					<div class="container">
+						<div class="service-area-inner col-12 col-md-12 text-center">
+							<div class="section-header full-width text-center">
+								<h3 class="title-common"><br>
+									Top-notch SEO & SEM Services</h3>
+								<h4>&nbsp;</h4>
+							</div>
+							<p>Way2Go offers customized end-to-end SEO & SEM Services solutions to help businesses
+								improve their online presence and reach their full potential. Our team of experts
+								provides tailored services to achieve specific objectives, such as increasing website
+								traffic and improving search engine rankings. By partnering with Way2Go, businesses can
+								access untapped markets and associate themselves with the best in the business, all
+								while staying ahead of the competition. Trust Way2Go to help you drive success for your
+								company with exceptional SEO & SEM Services.</p>
+						</div>
+						<div class="service-area-inner_cats full-width">
+							<div class="row">
+								<div class="col-lg-3 col-md-6 col-sm-6 left-area">
+									<div class="area-common">
+										<div class="area-icon">
+											<img alt="area-icon"
+												src="https://technocratshorizons.com/wp-content/uploads/2021/01/target-seo.png" />
+										</div>
+										<h4>Get Targeted Traffic</h4>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-6 col-sm-6 left-area">
+									<div class="area-common">
+										<div class="area-icon">
+											<img alt="area-icon"
+												src="https://technocratshorizons.com/wp-content/uploads/2021/01/seo.png" />
+										</div>
+										<h4>Improve Online Visibility</h4>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-6 col-sm-6 left-area">
+									<div class="area-common">
+										<div class="area-icon">
+											<img alt="area-icon"
+												src="https://technocratshorizons.com/wp-content/uploads/2021/01/profits-r.png" />
+										</div>
+										<h4>Earn Higher Returns</h4>
+									</div>
+								</div>
+								<div class="col-lg-3 col-md-6 col-sm-6 left-area">
+									<div class="area-common">
+										<div class="area-icon">
+											<img alt="area-icon"
+												src="https://technocratshorizons.com/wp-content/uploads/2021/01/billboard.png" />
+										</div>
+										<h4>Enhance Brand Building</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="service-area-improvement_points full-width">
+							<div class="row">
+								<div class="col-lg-6 col-sm-12">
+									<div class="improvement_points improvement_point-1">
+										<i class="fa fa-hand-o-right"></i>
+										<span>Optimize your website for search engines with targeted keywords.</span>
+									</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class="improvement_points improvement_point-2">
+										<i class="fa fa-hand-o-right"></i>
+										<span>Boost your brand's online visibility with expert SEO services.</span>
+									</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class="improvement_points improvement_point-3">
+										<i class="fa fa-hand-o-right"></i>
+										<span>Create an engaging and user-friendly website experience.</span>
+									</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class="improvement_points improvement_point-4">
+										<i class="fa fa-hand-o-right"></i>
+										<span>Reach new markets and increase traffic with a reliable off-site
+											source..</span>
+									</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class="improvement_points improvement_point-5">
+										<i class="fa fa-hand-o-right"></i>
+										<span>Take control of how Google crawls and reads your website for optimal
+											performance.</span>
+									</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class="improvement_points improvement_point-6">
+										<i class="fa fa-hand-o-right"></i>
+										<span>Expand your digital reach beyond just your company website.</span>
+									</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class="improvement_points improvement_point-7">
+										<i class="fa fa-hand-o-right"></i>
+										<span>Stay up-to-date with algorithm updates to keep your website
+											penalty-free.</span>
+									</div>
+								</div>
+								<div class="col-lg-6 col-sm-12">
+									<div class="improvement_points improvement_point-8">
+										<i class="fa fa-hand-o-right"></i>
+										<span>Develop a compelling content marketing strategy to captivate your
+											audience.</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<style>
+							/* CSS for the pop-up form */
+							.popup-overlay {
+								position: fixed;
+								top: 0;
+								left: 0;
+								width: 100%;
+								height: 100%;
+								background-color: rgba(0, 0, 0, 0.5);
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								z-index: 9999;
+							}
+						
+							.popup-content {
+								background-color: #fff;
+								padding: 20px;
+								border-radius: 5px;
+								box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+								position: relative;
+							}
+						
+							.close-button {
+								position: absolute;
+								top: 10px;
+								right: 10px;
+								font-size: 20px;
+								cursor: pointer;
+							}
+						</style>
+						
+						<div class="cta-row full-width text-center">
+							<a href="#" class="btn-gradient active" onclick="showPopup()">Request Free Consultation</a>
+						</div>
+						
+						<!-- Add the following JavaScript code to define the showPopup() function -->
+						
+						<script>
+							function showPopup() {
+								// Create a pop-up form
+								var overlay = document.createElement('div');
+								overlay.className = 'popup-overlay';
+						
+								var content = document.createElement('div');
+								content.className = 'popup-content';
+						
+								// Add your form HTML code here
+								content.innerHTML = `
+									<div class="close-button" onclick="closePopup()">&times;</div>
+									<h2>Consultation Form</h2>
+									<form action="https://formspree.io/f/xwkjzjok" method="POST" onsubmit="location.reload();">
+            <div class="form-group">
+                <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="Name *" required>
+                </div>
+                   <div class="form-group">
+                    <input type="email" name="email" class="form-control" placeholder="Email Address *" required>
+                </div>
+				<div class="form-group">
+					<input type="text" name="name" class="form-control" placeholder="Number: +91-9738874-XXX (🇮🇳)" required>
+				</div>
+				
+             
+            </div>
+            <div class="form-group">
+                <textarea name="message" placeholder="Type your message" class="form-control" rows="10" required></textarea>
+            </div>
+			<button type="submit" class="btn" style="background-color: #FE5B27; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Submit Your Requirements</button>
+
+        </form>
+								`;
+						
+								overlay.appendChild(content);
+								document.body.appendChild(overlay);
+							}
+						
+							function closePopup() {
+								var overlay = document.querySelector('.popup-overlay');
+								overlay.parentNode.removeChild(overlay);
+							}
+						</script>
+						
+
+					</div>
+				</div>
+
+				<div class="service-package-section full-width sec-spacing" style="background-color:#f8f8f8;">
+					<div class="container">
+						<div class="section-header full-width text-center">
+							<h2 class="full-width"> AFFORDABLE SEO PACKAGES FOR CORPORATE AND SMALL BUSINESSES </h2>
+						</div>
+						<div class="row">
+							<div class="col-lg-4 col-md-12 col-sm-12 col-12">
+								<div class="service_plan service-seq-1 full-width">
+									<div class="package_header">
+										<span class="package_header_one">STARTER PLAN </span>
+										<span class="package_header_two">Suitable for small business</span>
+										<span class="package_header_three">
+											<span class="currency">$</span>
+											<big>1000</big>
+											<small>/MO.</small>
+										</span>
+										<span class="package_header_four">10 Keyword targeted</span>
+										<a class="contact_us_link" href="tel:+91-82185 79074">Contact US</a>
+									</div>
+									<div class="package_description full-width">
+										<div class="full-width">
+											<h5>PROJECT RESEARCH</h5>
+											<h6>
+												<i class="fa fa-check"></i> Initial Business Analysis
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Competitors Analysis
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> In Depth Keyword Research
+											</h6>
+										</div>
+										<div class="full-width">
+											<h5>ON PAGE OPTIMIZATION</h5>
+											<h6>
+												<i class="fa fa-check"></i> Canonicalization
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Robots.txt Creation / Analysis
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> XML Sitemap Creation
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Google Analytics (If not installed)
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Title Meta Tags (5 Pages)
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Website Content Optimization
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Website Page Speed Optimization
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Header Tags
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Image Optimization
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Google Web Master Tools Setup (If not
+												installed)
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Url Structure Analysis
+											</h6>
+										</div>
+										<div class="full-width">
+											<h5>CONTENT MARKETING</h5>
+											<h6>
+												<i class="fa fa-check"></i> Content Research and Planning
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Blog Setup, Writing, Submission and
+												Promotion
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Classified Ads Writing and Promotion
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Document Sharing and Promotion
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Blog Optimization for Targeted Keywords
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Guest Blogging
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Press Release Writing & Submission
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Participating in Business Forums and
+												Discussion Communities
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Content Curation
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Micro Blogging
+											</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-12 col-sm-12 col-12">
+								<div class="service_plan service-seq-2 full-width">
+									<div class="package_header">
+										<span class="package_header_one">VALUE PLAN</span>
+										<span class="package_header_two">Suitable for startups</span>
+										<span class="package_header_three">
+											<span class="currency">$</span>
+											<big>1300</big>
+											<small>/MO.</small>
+										</span>
+										<span class="package_header_four">25 Keyword target</span>
+										<a class="contact_us_link" href="tel:+91-82185 79074">Contact US</a>
+									</div>
+									<div class="package_description full-width">
+										<div class="full-width">
+											<h5>PROJECT RESEARCH</h5>
+											<h6>
+												<i class="fa fa-check"></i> Initial Business Analysis
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Competitors Analysis
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> In Depth Keyword Research
+											</h6>
+										</div>
+										<div class="full-width">
+											<h5>ON PAGE OPTIMIZATION</h5>
+											<h6>
+												<i class="fa fa-check"></i> Canonicalization
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Robots.txt Creation / Analysis
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> XML Sitemap Creation
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Google Analytics (If not installed)
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Title Meta Tags (10 Pages)
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Website Content Optimization
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Website Page Speed Optimization
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Header Tags
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Image Optimization
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Google Web Master Tools Setup (If not
+												installed)
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Url Structure Analysis
+											</h6>
+										</div>
+										<div class="full-width">
+											<h5>CONTENT MARKETING</h5>
+											<h6>
+												<i class="fa fa-check"></i> Content Research and Planning
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Blog Setup, Writing, Submission and
+												Promotion
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Classified Ads Writing and Promotion
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Document Sharing and Promotion
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Blog Optimization for Targeted Keywords
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Guest Blogging
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Press Release Writing & Submission
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Participating in Business Forums and
+												Discussion Communities
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Content Curation
+											</h6>
+											<h6>
+												<i class="fa fa-times"></i> Micro Blogging
+											</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-12 col-sm-12 col-12">
+								<div class="service_plan service-seq-3 full-width">
+									<div class="package_header">
+										<span class="package_header_one">BOOSTER PLAN</span>
+										<span class="package_header_two">Suitable for corporates</span>
+										<span class="package_header_three">
+											<span class="currency">$</span>
+											<big>1500</big>
+											<small>/MO.</small>
+										</span>
+										<span class="package_header_four">50 Keyword targeted</span>
+										<a class="contact_us_link" href="tel:+91-82185 79074">Contact US</a>
+									</div>
+									<div class="package_description full-width">
+										<div class="full-width">
+											<h5>PROJECT RESEARCH</h5>
+											<h6>
+												<i class="fa fa-check"></i> Initial Business Analysis
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Competitors Analysis
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> In Depth Keyword Research
+											</h6>
+										</div>
+										<div class="full-width">
+											<h5>ON PAGE OPTIMIZATION</h5>
+											<h6>
+												<i class="fa fa-check"></i> Canonicalization
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Robots.txt Creation / Analysis
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> XML Sitemap Creation
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Google Analytics (If not installed)
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Title Meta Tags (20 Pages)
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Website Content Optimization
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Website Page Speed Optimization
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Header Tags
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Image Optimization
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Google Web Master Tools Setup (If not
+												installed)
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Url Structure Analysis
+											</h6>
+										</div>
+										<div class="full-width">
+											<h5>CONTENT MARKETING</h5>
+											<h6>
+												<i class="fa fa-check"></i> Content Research and Planning
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Blog Setup, Writing, Submission and
+												Promotion
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Classified Ads Writing and Promotion
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Document Sharing and Promotion
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Blog Optimization for Targeted Keywords
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Guest Blogging
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Press Release Writing & Submission
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Participating in Business Forums and
+												Discussion Communities
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Content Curation
+											</h6>
+											<h6>
+												<i class="fa fa-check"></i> Micro Blogging
+											</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="application-section">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-12 col-md-12 col-lg-8 application-content">
+								<h3 class="title-common">Looking for a way to achieve long-lasting results with your SEO
+									services?
+
+								</h3>
+								<div class="custom-content-layout custom-li-orange-icon">
+									<h4>Select Way2Go tech as your business partner - The leading online marketing
+										company.</h4>
+									<h5>We prioritize improving website traffic and business leads for our SEO clients
+										by:
+
+										:</h5>
+									<ul class="common_ul">
+										<li>Our SEO services start with personalized strategy planning that takes into
+											account your unique business challenges.
+										</li>
+										<li>Followed by keyword research with a keen focus on relevance to ensure that
+											your website ranks for the most effective search terms.</li>
+										<li>Our on-page SEO tactics emphasize content quality, providing your audience
+											with a valuable user experience.</li>
+										<li>We work to establish a strong overall online presence, utilizing multiple
+											sources of traffic to maximize your website's visibility.</li>
+										<li>Our White-Hat SEO techniques keep your website immune to the constantly
+											evolving search engine algorithms.
+										</li>
+										<li>We maintain a planned course of action and regularly update our SEO strategy
+											to ensure you see consistent long-term results.</li>
+									</ul>
+								</div>
+								<div class="application-links service-btn">
+									<a class="btn-gradient  active " href="Contactus.html">Talk To Our Experts
+										About Your Project<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+								</div>
+							</div>
+							<div class="col-sm-12 col-md-12 col-lg-4 application-img">
+								<img alt="mobile-app"
+									src="https://technocratshorizons.com/wp-content/uploads/2021/01/seo-banner-image.png" />
+							</div>
+						</div>
+					</div>
+				</div>
+			
+
+<div class="client-section circle-right-bg">
+<div class="e-main-testimonial common-testimonial-for-all">
+<div class="e-container customer-container-set">
+<div class="testimonial-heading-set">
+<div class="tp-header-set">
+<h2> <span> Words From </span> Our Happy Clients</h2>
+</div>
+</div>
+<div class="main-testimonial">
+<div class="inner-wrap-testimonial">
+<div class="swiper-container gallery-top all-gallery-top">
+<div class="swiper-wrapper">
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<div class="swiper-inner-text">
+True professionals, a pleasure to work with. Special shoutout to Gulshan! He's great! </div>
+</div>
+</div>
+<div class="item icon-test-1">
+<img alt="client-image" src=" https://technocratshorizons.com/wp-content/uploads/2023/03/image-18.png" />
+</div>
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<div class="swiper-inner-text">
+It was a pleasure working  Way2Go Technologies  Horizons Team they always respond in a timely manner. They developed a high-quality website for us and we will continue using them for SEO. They took all my concerns into account during the design phase and were always eager to try the changes we wanted. They always provided guidance for getting all our social media accounts set up. These guys are a joy to work with and are on top of their game! </div>
+</div>
+</div>
+<div class="item icon-test-2">
+<img alt="client-image" src=" https://technocratshorizons.com/wp-content/uploads/2023/03/image-17.png" />
+</div>
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<div class="swiper-inner-text">
+Working with Way2Go Technologies has been an absolutely pleasure. They re diligent, fast, and accurate. Communication is clear and straight forward, all tasks and projects get done in a timely manner, and the work quality is top notch. I highly recommend them! </div>
+</div>
+</div>
+<div class="item icon-test-3">
+<img alt="client-image" src=" https://technocratshorizons.com/wp-content/uploads/2023/03/image-16.png" />
+</div>
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<div class="swiper-inner-text">
+Completed my project successfully taking care of the specific requirements and adapting as needed to unexpected challenges. Thanks for the effort and look forward to our next project. </div>
+</div>
+</div>
+<div class="item icon-test-4">
+<img alt="client-image" src=" https://technocratshorizons.com/wp-content/uploads/2023/03/image-14-150x150.png" />
+</div>
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<div class="swiper-inner-text">
+<span data-sheets-value="{&quot;1&quot;:2,&quot;2&quot;:&quot;Collaborating with Technocrats has been an exceptionally delightful experience. Their diligence, speed, and precision are commendable. The clarity and directness of their communication facilitates efficient task and project completion within designated timelines, and their work is of the highest caliber. I unequivocally recommend their services.&quot;}" data-sheets-userformat="{&quot;2&quot;:5057,&quot;3&quot;:{&quot;1&quot;:0},&quot;9&quot;:0,&quot;10&quot;:1,&quot;11&quot;:4,&quot;12&quot;:0,&quot;15&quot;:&quot;Proxima Nova&quot;}">Collaborating with Way2Go Technologies has been an exceptionally delightful experience. Their diligence, speed, and precision are commendable. The clarity and directness of their communication facilitates efficient task and project completion within designated timelines, and their work is of the highest caliber. I unequivocally recommend their services.</span> </div>
+</div>
+</div>
+<div class="item icon-test-5">
+<img alt="client-image" src=" https://technocratshorizons.com/wp-content/uploads/2023/03/image-13-150x150.png" />
+</div>
+</div>
+</div>
+<div class="arrow-set-select">
+<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>
+</div>
+<div class="swiper-container gallery-thumb all-gallery-thumb">
+<div class="swiper-wrapper">
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<img src="https://technocratshorizons.com/wp-content/uploads/2023/03/image-18.png" alt="Nick Walsh">
+<strong>Nick Walsh</strong>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<img src="https://technocratshorizons.com/wp-content/uploads/2023/03/image-17.png" alt="Tenant Den">
+<strong>Tenant Den</strong>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<img src="https://technocratshorizons.com/wp-content/uploads/2023/03/image-16.png" alt="Flavio Carneiro">
+<strong>Flavio Carneiro</strong>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<img src="https://technocratshorizons.com/wp-content/uploads/2023/03/image-14-150x150.png" alt="Jiten Menda">
+<strong>Jiten Menda</strong>
+</div>
+</div>
+<div class="swiper-slide">
+<div class="swiper-slide-container">
+<img src="https://technocratshorizons.com/wp-content/uploads/2023/03/image-13-150x150.png" alt="Nickson Guay">
+<strong>Nickson Guay</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+			
+
+
+					<div class="consult-contact-form" id="consult_section"
+						style="background-image: url('https://technocratshorizons.com/wp-content/uploads/2022/05/contact-bg-image.jpg');">
+						<div class="container">
+							<h2 class="title-common text-center">Your Dream Project Is <span>Just A Click Away</span>
+							</h2>
+							<div class="contact-grid">
+								<div class="consult-contact-form-inner">
+									<div class="consult-destls-grid">
+										<div class="consult-content-box">
+											<span>Contact: </span>
+											<div class="consult-destls-img">
+												<img src="testimonial-pic.png"
+													alt="Sales Person" class="desktop_view">
+												<img src="testimonial-pic.png"
+													alt="Sales Person" class="mobile_view">
+											</div>
+											<div class="consult-author-destils">
+												<h3>Priyansh Chhabra</h3>
+												<span>Business Consultant</span>
+											</div>
+										</div>
+										<div class="consult-contat-info">
+											<a href="tel:+91-82185 79074" target="_blank"
+												class="consult-common-box consult-common-phone"><span><i
+														class="fa fa-phone mr-0" aria-hidden="true"></i>
+													<font>+91-8923497666</font>
+												</span>
+											</a>
+											<a href="/cdn-cgi/l/email-protection#84f2edf2e1efaae6c4f0e1e7eceaebe7f6e5f0f7ecebf6edfeebeaf7aae7ebe9"
+												class="consult-common-box"><span>
+													<i class="fa fa-envelope" aria-hidden="true"></i>
+													<font><span class="__cf_email__"
+															data-cfemail="0f7966796a64216d4f7b6a6c6761606c7d6e7b7c67607d667560617c216c6062">priyansh@way2go.tech</span>
+													</font>
+												</span></a>
+										</div>
+										<div class="consult-servies-info">
+											<h3>You Can Expect:</h3>
+											<ul>
+												<li>Phone Call Assistance</li>
+												<li>Project Estimation</li>
+												<li>Project Consultation</li>
+												<li>App Solutions Demo</li>
+											</ul>
+										</div>
+										<div class="google-review-sect">
+											<img src="https://technocratshorizons.com/wp-content/uploads/2022/08/oogle-review-logo-png-google.png.webp"
+												alt="google review">
+										</div>
+									</div>
+								</div>
+								<div class="consult-servies-from-or">
+									<span> Or</span>
+								</div>
+								<div class="e-hero-right">
+									<div class="e-commerce-form">
+										<div class="e-commerce-form-top">
+											<h3>LET’S DISCUSS YOUR REQUIREMENTS</h3>
+											<p>We deliver IT solutions that grow your business.</p>
+										</div>
+										<div class="wpcf7 no-js" id="wpcf7-f11171-o1" lang="en-US" dir="ltr">
+											<div class="screen-reader-response">
+												<p role="status" aria-live="polite" aria-atomic="true"></p>
+												<ul></ul>
+											</div>
+											<form action="https://formspree.io/f/xwkjzjok" method="POST" onsubmit="location.reload();">
+												<div class="form-group">
+													<div class="form-group">
+														<input type="text" name="name" class="form-control" placeholder="Name *" required>
+													</div>
+													   <div class="form-group">
+														<input type="email" name="email" class="form-control" placeholder="Email Address *" required>
+													</div>
+													<div class="form-group">
+														<input type="text" name="name" class="form-control" placeholder="Number: +91-9738874-XXX (🇮🇳)" required>
+													</div>
+													
+												 
+												</div>
+												<div class="form-group">
+													<textarea name="message" placeholder="Type your message" class="form-control" rows="10" required></textarea>
+												</div>
+												<button type="submit" class="btn" style="background-color: #FE5B27; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Submit Your Requirements</button>
+									
+											</form>
+										</div>
+									</div>
+								</div>
+
+
+
+
+
+
+
+			</main>
+			<style>
+				@media (max-width: 480px) {
+					.responisve-footer h2.widgettitle {
+						position: relative;
+					}
+
+					.responisve-footer h2.widgettitle:after {
+						content: "\f067";
+						font-family: 'FontAwesome';
+						position: absolute;
+						top: 0;
+						right: 25px;
+						font-size: 16px;
+					}
+
+					.responisve-footer h2.widgettitle.active:after {
+						content: "\f068";
+						font-family: 'FontAwesome';
+					}
+
+					.responisve-footer h2.widgettitle.active {
+						color: #FE5B27;
+					}
+
+					.responisve-footer .widget>div {
+						display: none;
+					}
+				}
+			</style>
+		</div>
+		<footer id="footer">
+			<div class="common-footer col-sm-12">
+			  <div class="container">
+				<div class="row">
+				  <div class="col-sm-12 logo-footer">
+					<a class="footer-brand" href="index.html">
+					  <img src="footer_logo-removebg-preview.png" alt="footer-logo" />
+					</a>
+				  </div>
+				  <div class="col-sm-6 col-md-3 common-footer-content responsive-footer">
+					<div id="nav_menu-3" class="widget widget_nav_menu">
+					  <h2 class="widgettitle">Solutions</h2>
+					  <div class="menu-footer-2-container">
+						<ul id="menu-footer-2" class="menu">
+						  <li id="menu-item-11888" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11888">
+							<a href="Mobile App Development Services.html">Mobile App Development Solutions</a>
+						  </li>
+						  <li id="menu-item-8828" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8828">
+							<a href="Custom Web Development Company _ Custom Web Development Services.html">Custom Web Development </a>
+						  </li>
+						  <li id="menu-item-8864" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8864">
+							<a href="Leading Digital Marketing Agency In 2023.html">Digital Marketing Solutions </a>
+						  </li>
+						  <li id="menu-item-8802" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8802">
+							<a href="Digital Marketing Agency.html">Search Engine Optimisation</a>
+						  </li>
+						  <li id="menu-item-11887" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11887">
+							<a href="E-commerce Solutions Provider - E-commerce Web & App Development.html">E-commerce Solutions</a>
+						  </li>
+						  <li id="menu-item-8845" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8845">
+							<a href="Open Source Development - Hire Open Source Developers _ Technocrats Horizons.html">Open Source Development</a>
+						  </li>
+						</ul>
+					  </div>
+					</div>
+				  </div>
+				  <div class="col-sm-6 col-md-3 common-footer-content responsive-footer">
+					<div id="nav_menu-5" class="widget widget_nav_menu">
+					  <h2 class="widgettitle">Company</h2>
+					  <div class="menu-footer-4-container">
+						<ul id="menu-footer-4" class="menu">
+						  <li id="menu-item-12405" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12405">
+							<a href="About Us -..html">About</a>
+						  </li>
+						  <li id="menu-item-7965" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7965">
+							<a href="Privacy Policy.html">Privacy Policy</a>
+						  </li>
+						  <li id="menu-item-12201" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-12201">
+							<a href="Terms of Use.html">Terms of Use</a>
+						  </li>
+						  <li id="menu-item-7964" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-7964">
+							<a href="Contactus.html">Contact Us</a>
+						  </li>
+						</ul>
+					  </div>
+					</div>
+				  </div>
+				  <div class="col-sm-6 col-md-3 common-footer-content responsive-footer">
+					<div id="custom_html-4" class="widget_text widget widget_custom_html">
+					  <h2 class="widgettitle">Call Us</h2>
+					  <div class="textwidget custom-html-widget">
+						<ul>
+						  <li><a href="tel:+91-82185 79074">Phone: +91-82185 79074</a></li>
+						  <li><a href="tel:+91-8923497666">Phone: +91-8923497666</a></li>
+						  <li><a href="mailto:info@way2go.tech">Email: info@way2go.tech</a></li>
+						</ul>
+					  </div>
+					</div>
+				  </div>
+				  <div class="col-sm-6 col-md-3 common-footer-content responsive-footer">
+					<div id="nav_menu-3" class="widget widget_nav_menu">
+					  <h2 class="widgettitle">Technologies</h2>
+					  <div class="menu-footer-2-container">
+						<ul id="menu-footer-2" class="menu">
+						  <li id="menu-item-11888" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11888">
+							<a href="Mobile App Development Services.html">iOS App Development Solutions</a>
+						  </li>
+						  <li id="menu-item-8828" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8828">
+							<a href="Custom Web Development Company _ Custom Web Development Services.html">Web development</a>
+						  </li>
+						  <li id="menu-item-8864" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8864">
+							<a href="Custom Web Development Company _ Custom Web Development Services.html">WordPress development</a>
+						  </li>
+						  <li id="menu-item-8802" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8802">
+							<a href="Ui UX Design Agency For Best UI UX Design Services _ Technocrats Horizons.html">Website Design</a>
+						  </li>
+						  <li id="menu-item-11887" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-11887">
+							<a href="Mobile App Development Services.html">Android Development</a>
+						  </li>
+						  <li id="menu-item-8845" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-8845">
+							<a href="Ui UX Design Agency For Best UI UX Design Services _ Technocrats Horizons.html">Graphic Designing</a>
+						  </li>
+						</ul>
+					  </div>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div>
+			<div class="copyright-section">
+			  <div class="container">
+				<div class="row align-items-center">
+				  <div class="col-12 col-sm-12 col-md-12 col-lg-6  copyright-content">
+					©&nbsp;Way2Go Technologies 2023. All rights reserved. <a href="https://www.linkedin.com/in/prasuna-d-101973200/">Code by PrasunaDash </a>
+				  </div>
+				  <div class="col-12 col-sm-12 col-md-12 col-lg-6 social-icons">
+					<ul class="social-list d-flex">
+					  <li>
+						<a target="_blank" href="https://www.facebook.com/profile.php?id=100089716205665&mibextid=ZbWKwL">
+						  <i class="fa fa-facebook" aria-hidden="true"></i>
+						</a>
+					  </li>
+					  <li>
+						<a target="_blank" href="https://www.linkedin.com/company/way2go-technologies/">
+						  <i class="fa fa-linkedin" aria-hidden="true"></i>
+						</a>
+					  </li>
+					  <li>
+						<a target="_blank" href="https://twitter.com/Way2GoTech?t=gxXO3qlZCFIbJ6K_5bogwg&s=09">
+						  <i class="fa fa-twitter" aria-hidden="true"></i>
+						</a>
+					  </li>
+					  <li>
+						<a target="_blank" href="https://instagram.com/way2gotechnologies?igshid=ZDdkNTZiNTM=">
+						  <i class="fa fa-instagram" aria-hidden="true"></i>
+						</a>
+					  </li>
+					</ul>
+				  </div>
+				</div>
+			  </div>
+			</div>
+		  </footer>
+	</div>
+	<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+	<script type="rocketlazyloadscript">
+
+// 	// Set the date we're counting down to
+// 	var countDownDate = new Date("nov 29, 2022 23:59:58").getTime();
+
+// 	// Update the count down every 1 second
+// 	var x = setInterval(function() {
+
+// 	// Get today's date and time
+// 	var now = new Date().getTime();
+		
+// 	// Find the distance between now and the count down date
+// 	var distance = countDownDate - now;
+		
+// 	// Time calculations for days, hours, minutes and seconds
+// 	var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+// 	var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+// 	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+// 	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		
+// 	// Output the result in an element with id="demo"
+// 	  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+//   + minutes + "m " + seconds + "s ";
+		
+// 	// If the count down is over, write some text 
+// 	if (distance < 0) {
+// 		clearInterval(x);
+// 		document.getElementById("demo").innerHTML = "EXPIRED";
+// 	}
+// 	}, 1000);
+</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript" charset="utf-8">
+var _uf = _uf || {};
+_uf.domain = "technocratshorizons.com";
+_uf.cookieExpiryDays = 30;
+_uf.additional_params_map = {
+	gclid: "IGCLID",
+	msclkid: "IMSCLKID",
+	fbclid: "IFBCLID",
+	place: "IPLACE",
+	net: "INET",
+	match: "IMATCH"
+};
+</script>
+	<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('load',function(){
+    if(window.location.pathname == "/thank-you/")
+    {
+      gtag('event', 'conversion', {'send_to': 'AW-10827443084/01vVCLvJ9IsDEIzX9qoo'});
+    }
+  });
+	
+		if(jQuery(window).width() < 1200){
+		responsive_menuNav();
+	}
+	jQuery(document).ready(function(){
+		dropdown_positionfix();
+		active_parents();
+		check_navstatus();
+		
+	});
+
+});</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+        document.addEventListener( 'wpcf7mailsent', function( event ) {
+        if( "fb_pxl_code" in event.detail.apiResponse){
+          eval(event.detail.apiResponse.fb_pxl_code);
+        }
+      }, false );
+    </script>
+
+	<div id="fb-pxl-ajax-code"></div>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/plugins/contact-form-7/includes/swv/js/index.js?ver=1681814884"
+		id="swv-js" defer></script>
+	<script type="text/javascript" id="contact-form-7-js-extra">
+		/* <![CDATA[ */
+		var wpcf7 = { "api": { "root": "https:\/\/technocratshorizons.com\/wp-json\/", "namespace": "contact-form-7\/v1" } };
+/* ]]> */
+	</script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/plugins/contact-form-7/includes/js/index.js?ver=1681814884"
+		id="contact-form-7-js" defer></script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/plugins/country-phone-field-contact-form-7/assets/js/intlTelInput.min.js?ver=6.2"
+		id="nbcpf-intlTelInput-script-js" defer></script>
+	<script type="text/javascript" id="nbcpf-countryFlag-script-js-extra">
+		/* <![CDATA[ */
+		var nbcpf = { "ajaxurl": "https:\/\/technocratshorizons.com\/wp-admin\/admin-ajax.php" };
+/* ]]> */
+	</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/plugins/country-phone-field-contact-form-7/assets/js/countrySelect.min.js?ver=6.2"
+		id="nbcpf-countryFlag-script-js" defer></script>
+	<script type="text/javascript" id="nbcpf-countryFlag-script-js-after">window.addEventListener('DOMContentLoaded', function () {
+			(function ($) {
+				$(function () {
+
+					function render_country_flags() {
+
+						$(".wpcf7-countrytext").countrySelect({
+
+						});
+						$(".wpcf7-phonetext").intlTelInput({
+							autoHideDialCode: false,
+							autoPlaceholder: "off",
+							nationalMode: false,
+							separateDialCode: false,
+							hiddenInput: "full_number",
+
+						});
+
+						$(".wpcf7-phonetext").each(function () {
+							var hiddenInput = $(this).attr('name');
+							//console.log(hiddenInput);
+							$("input[name=" + hiddenInput + "-country-code]").val($(this).val());
+						});
+
+						$(".wpcf7-phonetext").on("countrychange", function () {
+							// do something with iti.getSelectedCountryData()
+							//console.log(this.value);
+							var hiddenInput = $(this).attr("name");
+							$("input[name=" + hiddenInput + "-country-code]").val(this.value);
+
+						}); $(".wpcf7-phonetext").on("keyup", function () {
+							var dial_code = $(this).siblings(".flag-container").find(".country-list li.active span.dial-code").text();
+							if (dial_code == "")
+								var dial_code = $(this).siblings(".flag-container").find(".country-list li.highlight span.dial-code").text();
+							var value = $(this).val();
+							console.log(dial_code, value);
+							$(this).val(dial_code + value.substring(dial_code.length));
+						}); $(".wpcf7-countrytext").on("keyup", function () {
+							var country_name = $(this).siblings(".flag-dropdown").find(".country-list li.active span.country-name").text();
+							if (country_name == "")
+								var country_name = $(this).siblings(".flag-dropdown").find(".country-list li.highlight span.country-name").text();
+
+							var value = $(this).val();
+							//console.log(country_name, value);
+							$(this).val(country_name + value.substring(country_name.length));
+						});
+					}
+
+					var ip_address = "";
+
+					jQuery.ajax({
+						//url: "https://ipwho.is/",
+						url: "https://reallyfreegeoip.org/json/",
+						success: function (response) {
+
+							//console.log(response);
+							//var location = JSON.parse(response);
+							console.log(response.country_code);
+							if (response.country_code !== undefined) {
+								//console.log("here");
+								$(".wpcf7-countrytext").countrySelect({
+								});
+								$(".wpcf7-phonetext").intlTelInput({
+									autoHideDialCode: false,
+									autoPlaceholder: "off",
+									nationalMode: false,
+									separateDialCode: false,
+									hiddenInput: "full_number", initialCountry: response.country_code.toLowerCase(),
+								});
+
+								$(".wpcf7-phonetext").each(function () {
+									var hiddenInput = $(this).attr('name');
+									//console.log(hiddenInput);
+									$("input[name=" + hiddenInput + "-country-code]").val($(this).val());
+								});
+
+								$(".wpcf7-phonetext").on("countrychange", function () {
+									// do something with iti.getSelectedCountryData()
+									//console.log(this.value);
+									var hiddenInput = $(this).attr("name");
+									$("input[name=" + hiddenInput + "-country-code]").val(this.value);
+
+								}); $(".wpcf7-phonetext").on("keyup", function () {
+									var dial_code = $(this).siblings(".flag-container").find(".country-list li.active span.dial-code").text();
+									if (dial_code == "")
+										var dial_code = $(this).siblings(".flag-container").find(".country-list li.highlight span.dial-code").text();
+									var value = $(this).val();
+									console.log(dial_code, value);
+									$(this).val(dial_code + value.substring(dial_code.length));
+								}); $(".wpcf7-countrytext").on("keyup", function () {
+									var country_name = $(this).siblings(".flag-dropdown").find(".country-list li.active span.country-name").text();
+									if (country_name == "")
+										var country_name = $(this).siblings(".flag-dropdown").find(".country-list li.highlight span.country-name").text();
+
+									var value = $(this).val();
+									//console.log(country_name, value);
+									$(this).val(country_name + value.substring(country_name.length));
+								});
+
+							} else {
+
+								render_country_flags();
+
+							}
+
+						},
+						error: function () {
+							render_country_flags();
+						}
+					});
+				});
+			})(jQuery);
+		});</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/plugins/utm-tracker/js/utmtracker.min.js?ver=1.2.0"
+		async="async" id="utm-tracker-js-js"></script>
+	<script type="text/javascript" id="wpcf7-redirect-script-js-extra">
+		/* <![CDATA[ */
+		var wpcf7r = { "ajax_url": "https:\/\/technocratshorizons.com\/wp-admin\/admin-ajax.php" };
+/* ]]> */
+	</script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/plugins/wpcf7-redirect/build/js/wpcf7r-fe.js?ver=1681814884"
+		id="wpcf7-redirect-script-js" defer></script>
+	<script type="text/javascript" id="rocket-browser-checker-js-after">
+		"use strict"; var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || !1, descriptor.configurable = !0, "value" in descriptor && (descriptor.writable = !0), Object.defineProperty(target, descriptor.key, descriptor) } } return function (Constructor, protoProps, staticProps) { return protoProps && defineProperties(Constructor.prototype, protoProps), staticProps && defineProperties(Constructor, staticProps), Constructor } }(); function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function") } var RocketBrowserCompatibilityChecker = function () { function RocketBrowserCompatibilityChecker(options) { _classCallCheck(this, RocketBrowserCompatibilityChecker), this.passiveSupported = !1, this._checkPassiveOption(this), this.options = !!this.passiveSupported && options } return _createClass(RocketBrowserCompatibilityChecker, [{ key: "_checkPassiveOption", value: function (self) { try { var options = { get passive() { return !(self.passiveSupported = !0) } }; window.addEventListener("test", null, options), window.removeEventListener("test", null, options) } catch (err) { self.passiveSupported = !1 } } }, { key: "initRequestIdleCallback", value: function () { !1 in window && (window.requestIdleCallback = function (cb) { var start = Date.now(); return setTimeout(function () { cb({ didTimeout: !1, timeRemaining: function () { return Math.max(0, 50 - (Date.now() - start)) } }) }, 1) }), !1 in window && (window.cancelIdleCallback = function (id) { return clearTimeout(id) }) } }, { key: "isDataSaverModeOn", value: function () { return "connection" in navigator && !0 === navigator.connection.saveData } }, { key: "supportsLinkPrefetch", value: function () { var elem = document.createElement("link"); return elem.relList && elem.relList.supports && elem.relList.supports("prefetch") && window.IntersectionObserver && "isIntersecting" in IntersectionObserverEntry.prototype } }, { key: "isSlowConnection", value: function () { return "connection" in navigator && "effectiveType" in navigator.connection && ("2g" === navigator.connection.effectiveType || "slow-2g" === navigator.connection.effectiveType) } }]), RocketBrowserCompatibilityChecker }();
+	</script>
+	<script type="text/javascript" id="rocket-preload-links-js-extra">
+		/* <![CDATA[ */
+		var RocketPreloadLinksConfig = { "excludeUris": "\/ecommerce-business-problems-and-solutions|\/app-cost-calculator\/|\/cost-calculation-page|\/blogs\/|\/mobile-app-leads\/|\/blog\/app-solutions\/|\/blog\/ecommerce-development\/|\/blog\/news\/|\/blog\/outsourcing-development\/|\/(.+\/)?feed\/?.+\/?|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/lets-rock-thc\/|\/wp-admin\/|\/logout\/|\/lets-rock-thc\/", "usesTrailingSlash": "1", "imageExt": "jpg|jpeg|gif|png|tiff|bmp|webp|avif", "fileExt": "jpg|jpeg|gif|png|tiff|bmp|webp|avif|php|pdf|html|htm", "siteUrl": "https:\/\/technocratshorizons.com", "onHoverDelay": "100", "rateThrottle": "3" };
+/* ]]> */
+	</script>
+	<script type="text/javascript" id="rocket-preload-links-js-after">
+		(function () {
+			"use strict"; var r = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (e) { return typeof e } : function (e) { return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e }, e = function () { function i(e, t) { for (var n = 0; n < t.length; n++) { var i = t[n]; i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), Object.defineProperty(e, i.key, i) } } return function (e, t, n) { return t && i(e.prototype, t), n && i(e, n), e } }(); function i(e, t) { if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function") } var t = function () { function n(e, t) { i(this, n), this.browser = e, this.config = t, this.options = this.browser.options, this.prefetched = new Set, this.eventTime = null, this.threshold = 1111, this.numOnHover = 0 } return e(n, [{ key: "init", value: function () { !this.browser.supportsLinkPrefetch() || this.browser.isDataSaverModeOn() || this.browser.isSlowConnection() || (this.regex = { excludeUris: RegExp(this.config.excludeUris, "i"), images: RegExp(".(" + this.config.imageExt + ")$", "i"), fileExt: RegExp(".(" + this.config.fileExt + ")$", "i") }, this._initListeners(this)) } }, { key: "_initListeners", value: function (e) { -1 < this.config.onHoverDelay && document.addEventListener("mouseover", e.listener.bind(e), e.listenerOptions), document.addEventListener("mousedown", e.listener.bind(e), e.listenerOptions), document.addEventListener("touchstart", e.listener.bind(e), e.listenerOptions) } }, { key: "listener", value: function (e) { var t = e.target.closest("a"), n = this._prepareUrl(t); if (null !== n) switch (e.type) { case "mousedown": case "touchstart": this._addPrefetchLink(n); break; case "mouseover": this._earlyPrefetch(t, n, "mouseout") } } }, { key: "_earlyPrefetch", value: function (t, e, n) { var i = this, r = setTimeout(function () { if (r = null, 0 === i.numOnHover) setTimeout(function () { return i.numOnHover = 0 }, 1e3); else if (i.numOnHover > i.config.rateThrottle) return; i.numOnHover++, i._addPrefetchLink(e) }, this.config.onHoverDelay); t.addEventListener(n, function e() { t.removeEventListener(n, e, { passive: !0 }), null !== r && (clearTimeout(r), r = null) }, { passive: !0 }) } }, { key: "_addPrefetchLink", value: function (i) { return this.prefetched.add(i.href), new Promise(function (e, t) { var n = document.createElement("link"); n.rel = "prefetch", n.href = i.href, n.onload = e, n.onerror = t, document.head.appendChild(n) }).catch(function () { }) } }, { key: "_prepareUrl", value: function (e) { if (null === e || "object" !== (void 0 === e ? "undefined" : r(e)) || !1 in e || -1 === ["http:", "https:"].indexOf(e.protocol)) return null; var t = e.href.substring(0, this.config.siteUrl.length), n = this._getPathname(e.href, t), i = { original: e.href, protocol: e.protocol, origin: t, pathname: n, href: t + n }; return this._isLinkOk(i) ? i : null } }, { key: "_getPathname", value: function (e, t) { var n = t ? e.substring(this.config.siteUrl.length) : e; return n.startsWith("/") || (n = "/" + n), this._shouldAddTrailingSlash(n) ? n + "/" : n } }, { key: "_shouldAddTrailingSlash", value: function (e) { return this.config.usesTrailingSlash && !e.endsWith("/") && !this.regex.fileExt.test(e) } }, { key: "_isLinkOk", value: function (e) { return null !== e && "object" === (void 0 === e ? "undefined" : r(e)) && (!this.prefetched.has(e.href) && e.origin === this.config.siteUrl && -1 === e.href.indexOf("?") && -1 === e.href.indexOf("#") && !this.regex.excludeUris.test(e.href) && !this.regex.images.test(e.href)) } }], [{ key: "run", value: function () { "undefined" != typeof RocketPreloadLinksConfig && new n(new RocketBrowserCompatibilityChecker({ capture: !0, passive: !0 }), RocketPreloadLinksConfig).init() } }]), n }(); t.run();
+		}());
+	</script>
+	<script type="rocketlazyloadscript" data-rocket-type="text/javascript"
+		src="https://www.google.com/recaptcha/api.js?render=6LenoGIaAAAAAFTzb5KoXSR371EKa2e3h422yfD0&#038;ver=3.0"
+		id="google-recaptcha-js"></script>
+	<script type="text/javascript"
+		src="https://technocratshorizons.com/wp-includes/js/dist/vendor/wp-polyfill-inert.min.js?ver=3.1.2"
+		id="wp-polyfill-inert-js" defer></script>
+	<script type="text/javascript"
+		src="https://technocratshorizons.com/wp-includes/js/dist/vendor/regenerator-runtime.min.js?ver=0.13.11"
+		id="regenerator-runtime-js" defer></script>
+	<script type="text/javascript"
+		src="https://technocratshorizons.com/wp-includes/js/dist/vendor/wp-polyfill.min.js?ver=3.15.0"
+		id="wp-polyfill-js"></script>
+	<script type="text/javascript" id="wpcf7-recaptcha-js-extra">
+		/* <![CDATA[ */
+		var wpcf7_recaptcha = { "sitekey": "6LenoGIaAAAAAFTzb5KoXSR371EKa2e3h422yfD0", "actions": { "homepage": "homepage", "contactform": "contactform" } };
+/* ]]> */
+	</script>
+	<script type="rocketlazyloadscript" data-minify="1" data-rocket-type="text/javascript"
+		src="https://technocratshorizons.com/wp-content/cache/min/1/wp-content/plugins/contact-form-7/modules/recaptcha/index.js?ver=1681814884"
+		id="wpcf7-recaptcha-js" defer></script>
+	<a href="javascript:void(0);" class="scrollTop"><i class="fa fa-angle-up"></i></a>
+	<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
+ var cb = function() {
+ var l = document.createElement('link'); l.rel = 'stylesheet';
+ l.href = document.location.origin+'/wp-content/themes/technocrats/style.css';
+ // l.href = './wp-content/themes/technocrats/style.css';
+ var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
+ };
+ var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+ webkitRequestAnimationFrame || msRequestAnimationFrame;
+ if (raf) raf(cb);
+ else window.addEventListener('load', cb);
+ 
+	jQuery("a.scrollTop").on('click', function() {
+	  jQuery("html, body").animate({ scrollTop: 0 }, "200");
+	  return false;
+	});	
+
+	jQuery(window).scroll(function(){
+		scrollToTop()
+	});
+	
+});</script>
+	<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
+	jQuery(window).scroll(function() {
+	var top_nav = jQuery('.top-nav').height();
+	var myHeader = jQuery('#myHeader').height();
+	var total_header_height = top_nav + myHeader;
+	var consultation_section = jQuery('.portfolio-consultation-section').height();
+	if (jQuery(window).scrollTop() >= total_header_height) {
+        jQuery('.portfolio-consultation-section').css({'bottom': 0, 'opacity':'1'});
+        jQuery('html').css({'margin-bottom': consultation_section});
+    }
+    else {
+        jQuery('.portfolio-consultation-section').css({'bottom': "-"+consultation_section+"px"});
+        jQuery('html').css({'margin-bottom': '0px'});
+    }
+});
+});</script>
+	<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
+	jQuery('.our-expert-carousel').owlCarousel({
+		loop:true,
+		margin:20,
+		nav:true,
+		navText: ['<img class="expert-left-arrow" src="https://technocratshorizons.com/wp-content/themes/technocrats/images/left-arrow.png">', '<img class="expert-right-arrow" src="https://technocratshorizons.com/wp-content/themes/technocrats/images/right-arrow.png">'],
+		responsiveClass:true,
+		responsive:
+		{
+			0:
+			{
+				items:1,
+			},
+			581:
+			{
+				items:2,
+			}
+		}
+	});	
+});</script>
+	<script type="rocketlazyloadscript">
+	document.addEventListener( 'wpcf7mailsent', function( event ) {
+	  location = 'https://technocratshorizons.com/thank-you/';
+	}, false );
+</script>
+	<script type="rocketlazyloadscript">window.addEventListener('DOMContentLoaded', function() {
+jQuery(document).ready(function() {
+    if (jQuery(".post-toc").children().length == 0){
+    jQuery(".right-full-section").addClass('col-lg-11');
+    jQuery(".not-empty").addClass('hide-empty');
+    }
+});
+
+
+var galleryTop = new Swiper('.all-gallery-top', {
+      spaceBetween: 10,
+      speed:1000,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+       autoplay: 
+    {
+      delay: 3000,
+    },
+	 		loop: true,
+			loopedSlides: 50
+    });
+    var galleryThumbs = new Swiper('.all-gallery-thumb', {
+      spaceBetween: 10,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      touchRatio: 0.2,
+      slideToClickedSlide: true,
+      slidesPerView: 5,
+			loop: true,
+			loopedSlides: 50,
+	breakpoints: {
+	          0: {
+	            slidesPerView: 1,
+	          },
+	          667: {
+	            slidesPerView: 3,
+	          },
+	          768: {
+	            slidesPerView: 3,
+	          },
+	          1024: {
+	            slidesPerView: 5,
+	          },
+	        },
+    });
+    galleryTop.controller.control = galleryThumbs;
+    galleryThumbs.controller.control = galleryTop;
+jQuery('.swiper-container').on('mouseenter', function(e){
+   galleryTop.autoplay.stop();
+  })
+  jQuery('.swiper-container').on('mouseleave', function(e){
+  	galleryTop.autoplay.start();
+  })
+
+if (screen.width <= 575) {
+jQuery(document).ready(function() {
+  jQuery('.common-footer-content .widgettitle').on('click', function() {
+  jQuery(this).toggleClass("active");
+  jQuery(this).siblings().slideToggle();
+  });  
+});
+}
+});</script>
+
+</body>
+
+</html>
+<div class="modal fade" id="ConsultationModal" role="dialog">
+	<div class="modal-dialog modal-lg consultation-custom-modal form-ecom-custom-modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title form-heading"><span>Get A Free </span> Consultation</h5>
+				<h6>Discuss your business requirements with our experts now</h6>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div id="consult_section" class="modal-body consultation_contact_form">
+				<div class="wpcf7 no-js" id="wpcf7-f10966-o3" lang="en-US" dir="ltr">
+					<div class="screen-reader-response">
+						<p role="status" aria-live="polite" aria-atomic="true"></p>
+						<ul></ul>
+					</div>
+					<form action="/digital-marketing-agency/#wpcf7-f10966-o3" method="post" class="wpcf7-form init"
+						aria-label="Contact form" novalidate="novalidate" data-status="init">
+						<div style="display: none;">
+							<input type="hidden" name="_wpcf7" value="10966" />
+							<input type="hidden" name="_wpcf7_version" value="5.7.5.1" />
+							<input type="hidden" name="_wpcf7_locale" value="en_US" />
+							<input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f10966-o3" />
+							<input type="hidden" name="_wpcf7_container_post" value="0" />
+							<input type="hidden" name="_wpcf7_posted_data_hash" value />
+							<input type="hidden" name="_wpcf7_recaptcha_response" value />
+						</div>
+						<div class="ecommerce-from-set">
+							<div style="display:none">
+								<p><span class="wpcf7-form-control-wrap UserDetail"><input name="UserDetail"
+											class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden"
+											size="40" aria-invalid="false" type="hidden" value /></span><span
+										class="wpcf7-form-control-wrap IpAddress"><input name="IpAddress"
+											class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden"
+											size="40" aria-invalid="false" type="hidden" value /></span><span
+										class="wpcf7-form-control-wrap City"><input name="City"
+											class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden"
+											size="40" aria-invalid="false" type="hidden" value /></span><span
+										class="wpcf7-form-control-wrap Country"><input name="Country"
+											class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden"
+											size="40" aria-invalid="false" type="hidden" value /></span><span
+										class="wpcf7-form-control-wrap TimeZone"><input name="TimeZone"
+											class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden"
+											size="40" aria-invalid="false" type="hidden" value /></span><span
+										class="wpcf7-form-control-wrap PreviousPage"><input name="PreviousPage"
+											class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden"
+											size="40" aria-invalid="false" type="hidden" value /></span><span
+										class="wpcf7-form-control-wrap CurrentPage"><input name="CurrentPage"
+											class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden"
+											size="40" aria-invalid="false" type="hidden" value /></span><span
+										class="wpcf7-form-control-wrap FormName"><input name="FormName"
+											class="wpcf7-form-control wpcf7dtx-dynamictext wpcf7-dynamichidden"
+											size="40" aria-invalid="false" type="hidden" value /></span>
+								</p>
+							</div>
+							<div class="form-group col-md-12">
+								<p><span class="wpcf7-form-control-wrap" data-name="your-name"><input size="40"
+											class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required form-control"
+											aria-required="true" aria-invalid="false" placeholder="Your Name *" value
+											type="text" name="your-name" /></span>
+								</p>
+							</div>
+							<div class="form-group col-md-12">
+								<p><span class="wpcf7-form-control-wrap" data-name="email_address"><input size="40"
+											class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email form-control"
+											aria-required="true" aria-invalid="false" placeholder="Email Address *"
+											value type="email" name="email_address" /></span>
+								</p>
+							</div>
+							<div class="form-group col-md-12">
+								<p><span class="wpcf7-form-control-wrap" data-name="phone_number"><input size="40"
+											class="wpcf7-form-control wpcf7-text wpcf7-tel wpcf7-validates-as-required wpcf7-validates-as-tel form-control"
+											aria-required="true" aria-invalid="false" placeholder="Phone Number *" value
+											type="tel" name="phone_number" /></span>
+								</p>
+							</div>
+							<div class="form-group col-md-12 textarea-grp">
+								<p><span class="wpcf7-form-control-wrap" data-name="message"><textarea cols="40"
+											rows="10" class="wpcf7-form-control wpcf7-textarea form-control"
+											aria-invalid="false" placeholder="How can we help?"
+											name="message"></textarea></span>
+								</p>
+							</div>
+							<div class="form-group col-md-12 btn-group">
+								<p><input class="wpcf7-form-control has-spinner wpcf7-submit btn-gradient active"
+										type="submit" value="Let&#039;s begin" />
+								</p>
+							</div>
+						</div>
+						<div class="wpcf7-response-output" aria-hidden="true"></div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
